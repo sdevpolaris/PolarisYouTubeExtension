@@ -1,0 +1,36 @@
+{
+  "name": "Polaris: Youtube Extension",
+  "version": "1.0",
+  "description": "A Google Chrome Extension that enhances some of YouTube's UI elements",
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "*://www.youtube.com/*"
+  ],
+  "background": {
+    "page": "src/html/background.html",
+    "persistent": true
+  },
+  "options_page": "src/html/options.html",
+  "browser_action": {
+      "default_title": "Polaris: Youtube Assistant"
+  },
+  "manifest_version": 2,
+  "web_accessible_resources" : ["src/js/scripts/subscriptions.js", 
+                                "src/js/scripts/player.js",
+                                "src/html/subscriptions_filter"],
+  "content_scripts": [
+    {
+      "matches": ["*://www.youtube.com/*"],
+      "js": ["src/js/youtube.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://www.youtube.com/*"],
+      "js": ["src/js/subscriptions_filter.js"],
+      "css": ["src/css/subscriptions_filter.css"],
+      "run_at": "document_start"
+    }
+  ]
+}
