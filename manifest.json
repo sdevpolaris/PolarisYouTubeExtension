@@ -28,9 +28,14 @@
     },
     {
       "matches": ["*://www.youtube.com/*"],
+      "js": ["src/js/utils/settings.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://www.youtube.com/*"],
       "js": ["src/js/subscriptions_filter.js"],
       "css": ["src/css/subscriptions_filter.css"],
-      "run_at": "document_start"
+      "run_at": "document_end"
     }
   ]
 }

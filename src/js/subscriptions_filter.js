@@ -54,13 +54,29 @@
     observer.observe(guide_container, config);
   }
 
-  document.documentElement.addEventListener("load", function() {
-    if (document.getElementsByClassName("guide-toplevel")[0]) {
-      if (!document.getElementById('subscriptions-filter-section')) {
-        injectSubscriptionFilter();
-        observeSubscriptions();
-      }
+  var documentElement = document.documentElement;
+  var isSidePanelLoaded = document.getElementsByClassName("guide-toplevel")[0] !== undefined;
+  var isSubscriptionFilterInjected = document.getElementById('subscriptions-filter-section') !== null;
+
+  if (uiSettings.POLARIS_YT_SUBFILTER) {
+
+    // Inject the filter immediately if the page has already loaded the side panel
+
+    if (isSidePanelLoaded && !isSubscriptionFilterInjected) {
+      injectSubscriptionFilter();
+    } else {
+
+      // Listen for the event during the first time the user clicks the Hamburger icon and opens up the side panel
+
+      documentElement.addEventListener("load", function() {
+        if (document.getElementsByClassName("guide-toplevel")[0]) {
+          if (!document.getElementById('subscriptions-filter-section')) {
+            injectSubscriptionFilter();
+            documentElement.removeEventListener('load', true);
+          }
+        }
+      }, true);
     }
-  }, true);
+  }
 
 })();
