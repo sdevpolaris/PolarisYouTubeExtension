@@ -10,6 +10,6 @@ function removeAnnotationWrapper(create) {
 window.onYouTubePlayerReady = function(playerId) {
 }
 
-document.documentElement.addEventListener("load", function () {
-  window.yt.player.Application.create = removeAnnotationWrapper(window.yt.player.Application.create);
-}, true);
+// document.documentElement.addEventListener("load", function () {
+//   window.yt.player.Application.create = removeAnnotationWrapper(window.yt.player.Application.create);
+// }, true);
