@@ -21,10 +21,10 @@ polarisYT['POLARIS_YT_WATCH_PAGE_GENERAL'] = (function(){
     var dislikeClick = parseInt(dislikeClickBtn.innerHTML.split(',').join(''));
     var totalClick = likeClick + dislikeClick;
 
-    var likeUnclickPercentage = Math.round((likeUnclick / totalUnclick) * 100);
+    var likeUnclickPercentage = Math.floor((likeUnclick / totalUnclick) * 100);
     var dislikeUnclickPercentage = 100 - likeUnclickPercentage;
 
-    var likeClickPercentage = Math.round((likeClick / totalClick) * 100);
+    var likeClickPercentage = Math.floor((likeClick / totalClick) * 100);
     var dislikeClickPercentage = 100 - likeClickPercentage;
 
     likeUnclickBtn.innerHTML = likeUnclickBtn.innerHTML + ' (' + likeUnclickPercentage + '%)';
