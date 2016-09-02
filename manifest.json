@@ -33,18 +33,19 @@
     },
     {
       "matches": ["*://www.youtube.com/*"],
+      "js": ["src/js/subscriptions_filter.js"],
+      "css": ["src/css/subscriptions_filter.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://www.youtube.com/*"],
       "js": ["src/js/watch_page_search.js", "src/js/watch_page_general.js"],
+      "css": ["src/css/watch.css"],
       "run_at": "document_end"
     },
     {
       "matches": ["*://www.youtube.com/*"],
       "js": ["src/js/navigation.js"],
-      "run_at": "document_end"
-    },
-    {
-      "matches": ["*://www.youtube.com/*"],
-      "js": ["src/js/subscriptions_filter.js"],
-      "css": ["src/css/subscriptions_filter.css"],
       "run_at": "document_end"
     }
   ]

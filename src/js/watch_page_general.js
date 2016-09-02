@@ -1,4 +1,4 @@
-polarisYT['POLARIS_YT_WATCH_PAGE_GENERAL'] = (function(){
+(function(){
 
   'use strict';
 
@@ -34,14 +34,15 @@ polarisYT['POLARIS_YT_WATCH_PAGE_GENERAL'] = (function(){
     dislikeClickBtn.innerHTML = dislikeClickBtn.innerHTML + ' (' + dislikeClickPercentage + '%)';
   }
 
-  // Master function that will make enhancements to the watch page
+  // Hide recommended videos on the sidebar
 
-  function enhanceWatchPage() {
-    showLikeDislikePercentage();
+  function hideRecommendedVideos() {
+
   }
 
-  return {
-    action : enhanceWatchPage
-  }
+  // Register functions with global keys
+
+  polarisYT['YT_WATCH_PAGE_SHOW_LIKE_PERCENTAGE'] = { action : showLikeDislikePercentage };
+  polarisYT['YT_WATCH_PAGE_HIDE_RECOMMEND'] = { action : hideRecommendedVideos };
 
 })();

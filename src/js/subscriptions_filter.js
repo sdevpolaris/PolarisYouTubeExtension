@@ -1,4 +1,4 @@
-(function() {
+polarisYT['YT_SUBFILTER'] = (function() {
 
   'use strict';
 
@@ -71,11 +71,10 @@
     }
   }
 
-  var documentElement = document.documentElement;
-  var isSidePanelLoaded = document.getElementsByClassName("guide-toplevel")[0] !== undefined;
-  var isSubscriptionFilterInjected = document.getElementById('subscriptions-filter-section') !== null;
-
-  if (uiSettings.POLARIS_YT_SUBFILTER) {
+  function prepareSubscriptionFilter() {
+    var documentElement = document.documentElement;
+    var isSidePanelLoaded = document.getElementsByClassName("guide-toplevel")[0] !== undefined;
+    var isSubscriptionFilterInjected = document.getElementById('subscriptions-filter-section') !== null;
 
     // Inject the filter immediately if the page has already loaded the side panel
 
@@ -95,5 +94,9 @@
       }, true);
     }
   }
+
+  return {
+    action : prepareSubscriptionFilter
+  };
 
 })();

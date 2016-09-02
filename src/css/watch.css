@@ -1,0 +1,24 @@
+#custom-search-section {
+  text-align: center;
+}
+
+#watch-custom-search-toggle {
+  margin-bottom: 10px;
+}
+
+#watch-custom-search {
+  background: transparent;
+  display: inline-block;
+  left: 0;
+  margin: 0;
+  padding: 2px 6px;
+  width: 250px;
+  outline: none;
+  border: 0;
+  box-sizing: border-box;
+  font: 16px Roboto, arial, sans-serif;
+}
+
+#watch-custom-search-border {
+  margin-bottom: 10px;
+}

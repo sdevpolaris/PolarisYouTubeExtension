@@ -20,6 +20,15 @@
 
   'use strict';
 
+  function performAllActions(category, actions) {
+    for (var key in category) {
+      var enabled = category[key];
+      if (enabled) {
+        actions[key].action();
+      }
+    }
+  }
+
   function globalNavigationHandler(event) {
     var destURL;
 
@@ -33,15 +42,12 @@
 
     if (destURL.indexOf('youtube.com') !== -1) {
 
+      performAllActions(uiSettings.general, polarisYT);
+
       // Watch page with all of its feature toggles
 
       if (destURL.indexOf('watch') !== -1) {
-        for (var key in uiSettings.watch) {
-          var enabled = uiSettings.watch[key];
-          if (enabled) {
-            polarisYT[key].action();
-          }
-        }
+        performAllActions(uiSettings.watch, polarisYT);
       }
 
     }    

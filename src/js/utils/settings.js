@@ -15,15 +15,17 @@ var uiSettings = (function(){
   var loginStatus = isUserLoggedIn();
   var subFilter = true;
   var watchPageSearch = true;
-  var watchPageGeneral = true;
+  var showLikes = true;
+  var hideRecommendations = true;
 
   return {
-    POLARIS_YT_LOGIN             : loginStatus,
-    POLARIS_YT_SUBFILTER         : subFilter && loginStatus,
-
+    general : {
+      YT_SUBFILTER : subFilter && loginStatus
+    },
     watch : {
-      POLARIS_YT_WATCH_PAGE_SEARCH : watchPageSearch,
-      POLARIS_YT_WATCH_PAGE_GENERAL : watchPageGeneral
+      YT_WATCH_PAGE_SEARCH               : watchPageSearch,
+      YT_WATCH_PAGE_SHOW_LIKE_PERCENTAGE : showLikes,
+      YT_WATCH_PAGE_HIDE_RECOMMEND       : hideRecommendations
     }
   };
 
