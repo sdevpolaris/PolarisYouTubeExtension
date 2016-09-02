@@ -36,8 +36,46 @@
 
   // Hide recommended videos on the sidebar
 
-  function hideRecommendedVideos() {
+  function hideRecommendations(relatedList) {
+    var relatedVideos = relatedList.getElementsByClassName('related-list-item');
 
+    for (var index = 0; index < relatedVideos.length; index++) {
+      var relatedVideo = relatedVideos[index];
+      var statViewCount = relatedVideo.getElementsByClassName('view-count');
+
+      // Recommended videos have their view-count span contain the string instead of showing a view count
+
+      if (statViewCount.length > 0
+          && statViewCount[0].innerText.indexOf('Recommended for you') !== -1
+          && relatedVideo.className.indexOf('recommend-hide') === -1) {
+        relatedVideo.className = relatedVideo.className + ' recommend-hide';
+      }
+    }
+  }
+
+  function hideRecommendedVideos() {
+    var relatedList = document.getElementById('watch-related');
+
+    hideRecommendations(relatedList);
+
+    // Observer for when the user clicks Show More at the bottom of related videos list
+    // Need to catch the event when new related videos are loaded after
+
+    var observer = new MutationObserver(function(mutations) {
+      for (var index in mutations) {
+        var mutation = mutations[index];
+        if (mutation.target.id === 'watch-more-related') {
+          hideRecommendations(relatedList);
+
+          // Disconnect the observer immediately since the Show More button disappears after one click
+
+          observer.disconnect();
+        }
+      }
+    });
+
+    var config = { attributes: false, subtree: true, childList: true };
+    observer.observe(relatedList, config);
   }
 
   // Register functions with global keys
