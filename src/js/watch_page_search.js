@@ -2,6 +2,66 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
 
   'use strict';
 
+  var xhr;
+
+  function parseResponseAsDomAndQuery(responseText) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(responseText, 'text/html');
+    var resultTiles = doc.getElementsByClassName('yt-lockup-tile');
+
+    // Display the results to the sidebar
+
+
+  }
+
+  function changeContents() {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        parseResponseAsDomAndQuery(xhr.responseText);
+      } else {
+        console.log('Custom Search failed unexpectedly');
+      }
+    }
+  }
+
+  // This function returns the current username of the video playing by parsing
+  // the href attribute of user's logo (Not the channel name link since that gives a hashed channel ID which cannot be used in channel search)
+
+  function getCurrentUsername() {
+    var header = document.getElementById('watch7-user-header');
+    var userHref = header.getElementsByTagName('a')[0];
+
+    return userHref.href.split('/').pop();
+  }
+
+  function queryVideos(query, channelOnly) {
+
+    // Quit immediately if the input field has no content, no need to send a xhr with empty query
+
+    if (query.length === 0) {
+      return false;
+    }
+
+    var baseUrl;
+
+    if (channelOnly) {
+      var username = getCurrentUsername();
+      baseUrl = 'https://www.youtube.com/user/' + username + '/search?query=';
+    } else {
+      baseUrl = 'https://www.youtube.com/results?search_query=';
+    }
+
+    xhr = new XMLHttpRequest();
+
+    if (!xhr) {
+      return false;
+    }
+
+    xhr.onreadystatechange = changeContents;
+    xhr.open('GET', baseUrl + encodeURIComponent(query));
+    xhr.send();
+  }
+
   function injectCustomSearches() {
 
     var sidebarModules = document.getElementById('watch7-sidebar-modules');
@@ -20,16 +80,10 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
 
     var customSearchForm = document.createElement('form');
     customSearchForm.className = 'watch-custom-search-form search-form consolidated-form';
-    customSearchForm.onsubmit = function() {
-      return false;
-    }
 
     var customSearchBtn = document.createElement('button');
     customSearchBtn.id = 'watch-custom-search-btn';
     customSearchBtn.className = 'yt-uix-button yt-uix-button-size-default yt-uix-button-default search-btn-component search-button';
-    customSearchBtn.onclick = function() {
-      return false;
-    }
 
     var customSearchBtnContent = document.createElement('span');
     customSearchBtnContent.className = 'watch-custom-search-glass yt-uix-button-content';
@@ -53,15 +107,7 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
     // Form structure for the search input for searching only in current channel
 
     var customChannelSearchForm = customSearchForm.cloneNode(false);
-    customChannelSearchForm.onsubmit = function() {
-      return false;
-    }
-
     var customChannelSearchBtn = customSearchBtn.cloneNode(false);
-    customChannelSearchBtn.onclick = function() {
-      return false;
-    }
-
     var customChannelSearchBtnContent = customSearchBtnContent.cloneNode(false);
     var customChannelSearchTerms = customSearchTerms.cloneNode(false);
     var customChannelSearchTerm = customSearchTerm.cloneNode(false);
@@ -75,6 +121,28 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
 
     customSearchesWrapper.appendChild(customSearchForm);
     customSearchesWrapper.appendChild(customChannelSearchForm);
+
+    // Overwriting onsubmit/onclick functions to use xhr
+
+    customSearchForm.onsubmit = function() {
+      queryVideos(customSearchTerm.value, false);
+      return false;
+    }
+
+    customSearchBtn.onclick = function() {
+      queryVideos(customSearchTerm.value, false);
+      return false;
+    }
+
+    customChannelSearchForm.onsubmit = function() {
+      queryVideos(customChannelSearchTerm.value, true);
+      return false;
+    }
+
+    customChannelSearchBtn.onclick = function() {
+      queryVideos(customChannelSearchTerm.value, true);
+      return false;
+    }
 
     // Line separator for the entire section
 
@@ -99,7 +167,7 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
     customSearchSection.appendChild(customSearchesWrapper);
     customSearchSection.appendChild(sidebarSeparator);
 
-    // Initially the search options should be hidden
+    // Initially the search options should be showing
 
     var isSearchVisible = true;
 
