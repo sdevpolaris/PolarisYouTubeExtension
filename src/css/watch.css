@@ -1,7 +1,3 @@
-.recommend-hide {
-  display: none;
-}
-
 #custom-search-section {
   text-align: center;
 }
@@ -10,19 +6,88 @@
   margin-bottom: 10px;
 }
 
-#watch-custom-search {
+.watch-custom-search-div {
   background: transparent;
   display: inline-block;
   left: 0;
   margin: 0;
   padding: 2px 6px;
-  width: 250px;
+  width: 100%;
   outline: none;
   border: 0;
   box-sizing: border-box;
   font: 16px Roboto, arial, sans-serif;
 }
 
-#watch-custom-search-border {
+.watch-hide {
+  display: none;
+}
+
+.custom-search-border {
   margin-bottom: 10px;
+}
+
+.watch-custom-search-form {
+  margin-top: 3px;
+  max-width: 600px;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  display: inline-block;
+  width: 95%;
+}
+
+.watch-custom-search-form .search-btn-component {
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  height: 29px;
+  float: right;
+}
+
+.watch-custom-search-form .watch-custom-search-glass {
+  border: none;
+  display: block;
+  opacity: 0.6;
+  padding: 0;
+  text-indent: -10000px;
+  background: no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-2x-vfldM0DhM.webp) -32px -152px;
+  background-size: 358px 474px;
+  width: 15px;
+  height: 15px;
+  box-shadow: none;
+  margin: 0 25px;
+}
+
+.watch-custom-search-terms {
+  background-color: #fff;
+  font-size: 14px;
+  height: 29px;
+  line-height: 30px;
+  margin: 0 0 2px;
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  transition: border-color .2s ease;
+}
+
+.watch-custom-search-term {
+  outline: none;
+  background: transparent;
+  border: 0;
+  display: inline-block;
+  font-size: 16px;
+  height: 100%;
+  left: 0;
+  margin: 0;
+  padding: 2px 6px;
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.watch-custom-sidebar-separation-line {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #e2e2e2;
 }

@@ -18,7 +18,7 @@ polarisYT['YT_SUBFILTER'] = (function() {
     // Insert our section before the existing one
 
     subscriptions_panel.insertBefore(subscriptions_filter_section, subscriptions_section);
-    var subscriptions_filter_html = '<h3>SUBSCRIPTIONS FILTER</h3><div id="subscriptions-filter-border" class="masthead-search-terms-border"><input id="subscriptions-filter-search" type="text" autocomplete="off" autofocus placeholder="Filter keyword" class="search-term masthead-search-renderer-input yt-uix-form-input-bidi" value=""/></div><hr class="guide-section-separator">';
+    var subscriptions_filter_html = '<h3>SUBSCRIPTIONS FILTER</h3><div id="subscriptions-filter-border" class="masthead-search-terms-border"><input id="subscriptions-filter-search" type="text" autocomplete="off" placeholder="Filter keyword" class="search-term masthead-search-renderer-input yt-uix-form-input-bidi" value=""/></div><hr class="guide-section-separator">';
     
     // Inject custom inputs and misc. elements
 

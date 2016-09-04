@@ -47,8 +47,8 @@
 
       if (statViewCount.length > 0
           && statViewCount[0].innerText.indexOf('Recommended for you') !== -1
-          && relatedVideo.className.indexOf('recommend-hide') === -1) {
-        relatedVideo.className = relatedVideo.className + ' recommend-hide';
+          && relatedVideo.className.indexOf('watch-hide') === -1) {
+        relatedVideo.className = relatedVideo.className + ' watch-hide';
       }
     }
   }
