@@ -15,18 +15,21 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
     sidebarModules.insertBefore(customSearchSection, sidebarModules.firstChild);
 
     var customSearchesWrapper = document.createElement('div');
-    customSearchesWrapper.className = 'watch-hide';
 
     // Form structure for the search input (mirroring from YouTube's search bar on the top)
 
     var customSearchForm = document.createElement('form');
     customSearchForm.className = 'watch-custom-search-form search-form consolidated-form';
-    // customSearchForm.innerHTML = '<button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default search-btn-component search-button" type="submit" id="watch-custom-search-btn"><span class="watch-custom-search-glass yt-uix-button-content">Search</span></button><div class="watch-custom-search-terms masthead-search-terms-border"><input class="watch-custom-search-term search-term masthead-search-renderer-input yt-uix-form-input-bidi" name="search_query" value="" type="text" tabindex="1" placeholder="Search" title="Search" aria-label="Search" dir="ltr" spellcheck="false" style="outline: none;"></div>';
+    customSearchForm.onsubmit = function() {
+      return false;
+    }
 
     var customSearchBtn = document.createElement('button');
     customSearchBtn.id = 'watch-custom-search-btn';
     customSearchBtn.className = 'yt-uix-button yt-uix-button-size-default yt-uix-button-default search-btn-component search-button';
-    customSearchBtn.type = 'submit';
+    customSearchBtn.onclick = function() {
+      return false;
+    }
 
     var customSearchBtnContent = document.createElement('span');
     customSearchBtnContent.className = 'watch-custom-search-glass yt-uix-button-content';
@@ -50,7 +53,15 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
     // Form structure for the search input for searching only in current channel
 
     var customChannelSearchForm = customSearchForm.cloneNode(false);
+    customChannelSearchForm.onsubmit = function() {
+      return false;
+    }
+
     var customChannelSearchBtn = customSearchBtn.cloneNode(false);
+    customChannelSearchBtn.onclick = function() {
+      return false;
+    }
+
     var customChannelSearchBtnContent = customSearchBtnContent.cloneNode(false);
     var customChannelSearchTerms = customSearchTerms.cloneNode(false);
     var customChannelSearchTerm = customSearchTerm.cloneNode(false);
@@ -78,7 +89,7 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
 
     var searchDisplayToggleText = document.createElement('span');
     searchDisplayToggleText.className = 'yt-uix-button-content';
-    searchDisplayToggleText.innerHTML = 'Show Search Options';
+    searchDisplayToggleText.innerHTML = 'Hide Search Options';
 
     searchDisplayToggle.appendChild(searchDisplayToggleText);
 
@@ -90,7 +101,7 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
 
     // Initially the search options should be hidden
 
-    var isSearchVisible = false;
+    var isSearchVisible = true;
 
     searchDisplayToggle.onclick = function() {
       isSearchVisible = !isSearchVisible;
