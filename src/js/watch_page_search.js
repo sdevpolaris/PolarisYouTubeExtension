@@ -2,9 +2,15 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
 
   'use strict';
 
-  function buildItem(tile, parser) {
+  function buildItem(tile) {
 
-    var url = tile.querySelectorAll('.yt-lockup-thumbnail a.yt-uix-sessionlink.spf-link')[0].attributes.href.value;
+    // Url of the video
+
+    var url = tile.querySelectorAll('.yt-lockup-thumbnail a.yt-uix-sessionlink')[0].attributes.href.value;
+
+    // There are two possible ways to get the source of the thumbnail image element
+    // either through the src attribute or the data-thumb attribute
+
     var img = tile.getElementsByTagName('img')[0];
     var thumbnail = img.attributes['data-thumb'];
     var imgsrc;
@@ -15,11 +21,15 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
       imgsrc = img.attributes['data-thumb'].value;
     }
 
-    var title = tile.querySelectorAll('.yt-lockup-content .yt-lockup-title a')[0].attributes.title.value;
-    var viewsMeta = tile.querySelectorAll('.yt-lockup-meta-info li');
-    var views;
+    // Title of the video
 
-    var channel = tile.querySelectorAll('.yt-lockup-byline a')[0].innerText;
+    var title = tile.querySelectorAll('.yt-lockup-content .yt-lockup-title a')[0].attributes.title.value;
+
+    // ytid is used for showing the correct hover card for the channel
+
+    var channelMeta = tile.querySelectorAll('.yt-lockup-byline a')[0];
+    var channel = channelMeta.innerText;
+    var ytid = channelMeta.attributes['data-ytid'].value;
 
     var videoTime = tile.querySelectorAll('.video-time');
 
@@ -29,7 +39,10 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
       videoTime = videoTime[0].innerText;
     }
 
-    // Streaming videos, instead of a view count they have "(number) watching" statistic
+    // View count can be either a number, or in the case of streaming videos, they have "(number) watching" instead
+
+    var viewsMeta = tile.querySelectorAll('.yt-lockup-meta-info li');
+    var views;
 
     if (viewsMeta.length === 1) {
       views = viewsMeta[0].innerText;
@@ -54,9 +67,9 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
           '+title+'\
         </span> \
         <span class="accessible-description"> \
-          - Duration: 10:00. \
+          - Duration: '+videoTime+'. \
         </span> \
-        <span class="stat attribution"><span class="g-hovercard" data-name="autonav" data-ytid="UCuiqmg77rElIv0lXnDzogcA">'+channel+'</span></span> \
+        <span class="stat attribution"><span class="g-hovercard" data-name="autonav" data-ytid="'+ytid+'">'+channel+'</span></span> \
         <span class="stat view-count"> \
           '+views+'\
         </span> \
@@ -87,8 +100,6 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
     cbObject.relatedSection.classList.add('watch-hide');
     cbObject.upNextSection.classList.add('watch-hide');
 
-    var parser = new DOMParser();
-
     // Update title with query
 
     cbObject.searchResultTitle.innerHTML = 'Result for query: ' + query;
@@ -96,7 +107,7 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
     // Build each item from the result and add to the search result list
 
     for (var t = 0; t < tiles.length; t++) {
-      var item = buildItem(tiles[t], parser);
+      var item = buildItem(tiles[t]);
       cbObject.searchResultList.appendChild(item);
     }
   }
