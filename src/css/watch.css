@@ -87,3 +87,9 @@
   margin-bottom: 10px;
   border-bottom: 1px solid #e2e2e2;
 }
+
+/* Applying YouTube's styles to the old related video section */
+
+#watch7-sidebar .watch-sidebar-section:nth-last-child(2) {
+  margin-bottom: 0;
+}
