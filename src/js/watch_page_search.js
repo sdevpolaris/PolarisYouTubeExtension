@@ -120,14 +120,19 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
     displaySearchResults(resultTiles, query, cbObject);
   }
 
-  // This function returns the current username of the video playing by parsing
-  // the href attribute of user's logo (Not the channel name link since that gives a hashed channel ID which cannot be used in channel search)
+  // This function returns the current username or the channel id of the video playing by parsing
+  // the href attribute of user's logo
 
-  function getCurrentUsername() {
+  function getCurrentChannelId() {
     var header = document.getElementById('watch7-user-header');
     var userHref = header.getElementsByTagName('a')[0];
 
-    return userHref.href.split('/').pop();
+    var tokens = userHref.href.split('/');
+
+    var id = tokens.pop();
+    var userType = tokens.pop();
+
+    return userType + '/' + id;
   }
 
   function queryVideos(xhr, query, channelOnly, cbObject) {
@@ -141,8 +146,8 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
     var baseUrl;
 
     if (channelOnly) {
-      var username = getCurrentUsername();
-      baseUrl = 'https://www.youtube.com/user/' + username + '/search?query=';
+      var channelId = getCurrentChannelId();
+      baseUrl = 'https://www.youtube.com/' + channelId + '/search?query=';
     } else {
       baseUrl = 'https://www.youtube.com/results?search_query=';
     }
