@@ -96,13 +96,11 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
     // Always hide related videos (Old lists) and show our new search results
     // whenever the search query completes
 
-    cbObject.searchResultList.innerHTML = '';
-    cbObject.relatedSection.classList.add('watch-hide');
-    cbObject.upNextSection.classList.add('watch-hide');
+    focusToSearchResults(cbObject);
 
     // Update title with query
 
-    cbObject.searchResultTitle.innerHTML = 'Result for query: ' + query;
+    cbObject.searchResultTitleText.innerHTML = 'Result for query: ' + query;
 
     // Build each item from the result and add to the search result list
 
@@ -166,6 +164,30 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
     };
     xhr.open('GET', baseUrl + encodeURIComponent(query));
     xhr.send();
+  }
+
+  function focusToSearchResults(cbObject) {
+    cbObject.searchResultList.innerHTML = '';
+    cbObject.relatedToggle.innerHTML = 'Switch to related videos';
+    cbObject.searchResultSection.classList.remove('watch-hide');
+    cbObject.relatedSection.classList.add('watch-hide');
+    cbObject.upNextSection.classList.add('watch-hide');
+  }
+
+  function toggleRelatedVideos(cbObject) {
+    var resultsHidden = cbObject.searchResultSection.classList.contains('watch-hide');
+
+    if (!resultsHidden) {
+      cbObject.relatedToggle.innerHTML = 'Switch to search results';
+      cbObject.searchResultSection.classList.add('watch-hide');
+      cbObject.upNextSection.classList.remove('watch-hide');
+      cbObject.relatedSection.classList.remove('watch-hide');
+    } else {
+      cbObject.relatedToggle.innerHTML = 'Switch to related videos';
+      cbObject.searchResultSection.classList.remove('watch-hide');
+      cbObject.upNextSection.classList.add('watch-hide');
+      cbObject.relatedSection.classList.add('watch-hide');
+    }
   }
 
   // Main function to create the section which all the custom search bars will sit in
@@ -240,10 +262,13 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
     // Create the search resulting section
 
     var searchResultSection = document.createElement('div');
-    searchResultSection.className = 'watch-sidebar-section';
+    searchResultSection.className = 'watch-sidebar-section watch-hide';
 
     var searchResultTitle = document.createElement('div');
-    searchResultTitle.innerHTML = 'Result for query: ';
+    var searchResultTitleText = document.createElement('h4');
+    searchResultTitleText.innerHTML = 'Result for query: ';
+    searchResultTitleText.className = 'watch-sidebar-head';
+    searchResultTitle.appendChild(searchResultTitleText);
 
     var searchResultBody = document.createElement('div');
     searchResultBody.className = 'watch-sidebar-body';
@@ -256,6 +281,28 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
     searchResultSection.appendChild(searchResultTitle);
     searchResultSection.appendChild(searchResultBody);
 
+    // Line separator for the entire section
+
+    var sidebarSeparator = document.createElement('hr');
+    sidebarSeparator.className = 'watch-custom-sidebar-separation-line';
+
+    // This toggle will show and hide search options
+
+    var searchDisplayToggle = document.createElement('button');
+    searchDisplayToggle.id = 'watch-custom-search-toggle';
+    searchDisplayToggle.className = 'yt-uix-button yt-uix-button-default yt-uix-button-size-default';
+
+    var searchDisplayToggleText = document.createElement('span');
+    searchDisplayToggleText.className = 'yt-uix-button-content';
+    searchDisplayToggleText.innerHTML = 'Hide Search Options';
+
+    searchDisplayToggle.appendChild(searchDisplayToggleText);
+
+    // This toggle will switch between old related videos and search results
+
+    var relatedToggle = searchDisplayToggle.cloneNode(true);
+    relatedToggle.getElementsByTagName('span')[0].innerHTML = 'Switch to search results';
+
     // Overwriting onsubmit/onclick functions to use xhr
 
     var xhr;
@@ -263,7 +310,9 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
     var callbackObject = {};
     callbackObject.upNextSection = upNextSection;
     callbackObject.relatedSection = relatedSection;
-    callbackObject.searchResultTitle = searchResultTitle;
+    callbackObject.searchResultSection = searchResultSection;
+    callbackObject.relatedToggle = relatedToggle;
+    callbackObject.searchResultTitleText = searchResultTitleText;
     callbackObject.searchResultList = searchResultList;
 
     customSearchForm.onsubmit = function() {
@@ -286,22 +335,11 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
       return false;
     }
 
-    // Line separator for the entire section
+    relatedToggle.onclick = function() {
+      toggleRelatedVideos(callbackObject);
+    }
 
-    var sidebarSeparator = document.createElement('hr');
-    sidebarSeparator.className = 'watch-custom-sidebar-separation-line';
-
-    // This toggle will show and hide search options
-
-    var searchDisplayToggle = document.createElement('button');
-    searchDisplayToggle.id = 'watch-custom-search-toggle';
-    searchDisplayToggle.className = 'yt-uix-button yt-uix-button-default yt-uix-button-size-default';
-
-    var searchDisplayToggleText = document.createElement('span');
-    searchDisplayToggleText.className = 'yt-uix-button-content';
-    searchDisplayToggleText.innerHTML = 'Hide Search Options';
-
-    searchDisplayToggle.appendChild(searchDisplayToggleText);
+    customSearchesWrapper.appendChild(relatedToggle);
 
     // Add all components to the section element
 

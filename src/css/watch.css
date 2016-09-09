@@ -3,6 +3,7 @@
 }
 
 #watch-custom-search-toggle {
+  margin-top: 5px;
   margin-bottom: 10px;
 }
 
@@ -21,10 +22,6 @@
 
 .watch-hide {
   display: none;
-}
-
-.custom-search-border {
-  margin-bottom: 10px;
 }
 
 .watch-custom-search-form {
@@ -87,7 +84,6 @@
 }
 
 .watch-custom-sidebar-separation-line {
-  margin-top: 15px;
   margin-bottom: 10px;
   border-bottom: 1px solid #e2e2e2;
 }
