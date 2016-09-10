@@ -1,7 +1,0 @@
-detect youtube user logged in or not
-annotations
-subscription filter
-subscribe to a series, not a channel
-time markers from comments, filtered by vote count
-search query to channel on watch page
-organize subscriptions based on category (kinda iff)
