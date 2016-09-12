@@ -135,7 +135,9 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
     return userType + '/' + id;
   }
 
-  function queryVideos(xhr, query, channelOnly, cbObject) {
+  function queryVideos(xhr, field, channelOnly, cbObject) {
+
+    var query = field.value;
 
     // Quit immediately if the input field has no content, no need to send a xhr with empty query
 
@@ -161,11 +163,18 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
     xhr.onreadystatechange = function() {
       if (xhr.readyState === XMLHttpRequest.DONE) {
         if (xhr.status === 200) {
+
+          // Our xhr response is an entire html document, need to parse and find all the corresponding video search result elements
+
           parseResponseAsDomAndQuery(xhr.responseText, query, cbObject);
+
+          // Clearing the search field once a search completes
+
+          field.value = '';
         } else {
           console.log('Custom Search failed unexpectedly');
         }
-    }
+      }
     };
     xhr.open('GET', baseUrl + encodeURIComponent(query));
     xhr.send();
@@ -321,28 +330,28 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
     callbackObject.searchResultList = searchResultList;
 
     customSearchForm.onsubmit = function() {
-      queryVideos(xhr, customSearchTerm.value, false, callbackObject);
+      queryVideos(xhr, customSearchTerm, false, callbackObject);
       return false;
-    }
+    };
 
     customSearchBtn.onclick = function() {
-      queryVideos(xhr, customSearchTerm.value, false, callbackObject);
+      queryVideos(xhr, customSearchTerm, false, callbackObject);
       return false;
-    }
+    };
 
     customChannelSearchForm.onsubmit = function() {
-      queryVideos(xhr, customChannelSearchTerm.value, true, callbackObject);
+      queryVideos(xhr, customChannelSearchTerm, true, callbackObject);
       return false;
-    }
+    };
 
     customChannelSearchBtn.onclick = function() {
-      queryVideos(xhr, customChannelSearchTerm.value, true, callbackObject);
+      queryVideos(xhr, customChannelSearchTerm, true, callbackObject);
       return false;
-    }
+    };
 
     relatedToggle.onclick = function() {
       toggleRelatedVideos(callbackObject);
-    }
+    };
 
     customSearchesWrapper.appendChild(relatedToggle);
 
@@ -367,7 +376,7 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
         customSearchesWrapper.classList.add('watch-hide');
         searchDisplayToggleText.innerHTML = 'Show Search Options';
       }
-    }
+    };
   }
 
   return {
