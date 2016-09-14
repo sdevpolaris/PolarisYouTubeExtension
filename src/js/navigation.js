@@ -48,6 +48,7 @@
 
       if (destURL.indexOf('watch') !== -1) {
         performAllActions(uiSettings.watch, polarisYT);
+        performAllActions(uiSettings.player, polarisYT);
       }
 
     }    

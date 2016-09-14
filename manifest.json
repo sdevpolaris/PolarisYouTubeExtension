@@ -17,7 +17,7 @@
       "default_title": "Polaris: Youtube Assistant"
   },
   "manifest_version": 2,
-  "web_accessible_resources" : ["src/js/scripts/player.js"],
+  "web_accessible_resources" : ["src/js/scripts/player.js", "src/fonts/*.*"],
   "content_scripts": [
     {
       "matches": ["*://www.youtube.com/*"],
@@ -37,8 +37,8 @@
     },
     {
       "matches": ["*://www.youtube.com/*"],
-      "js": ["src/js/watch_page_search.js", "src/js/watch_page_general.js"],
-      "css": ["src/css/watch.css"],
+      "js": ["src/js/watch_page_search.js", "src/js/watch_page_general.js", "src/js/player_controls.js"],
+      "css": ["src/css/vendor/font-awesome.css", "src/css/watch.css"],
       "run_at": "document_end"
     },
     {

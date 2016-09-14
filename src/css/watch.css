@@ -93,3 +93,11 @@
 #watch7-sidebar .watch-sidebar-section:nth-last-child(2) {
   margin-bottom: 0;
 }
+
+
+/* Bottom Player controls */
+svg.watch-custom-control text {
+  font-family: FontAwesome;
+  font-size: 16px;
+  fill: white;
+}
