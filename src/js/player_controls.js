@@ -5,6 +5,30 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
   // className for the preview tooltip that popups when you hover the progress bar:
   // ytp-tooltip ytp-bottom ytp-preview, the previews
 
+  function enableScreenshot(control) {
+    control.onclick = function() {
+      var screenshotDiv = document.createElement('div');
+      screenshotDiv.id = 'screenshotDivId';
+      screenshotDiv.className = 'custom-bottom-right-overlay yt-card';
+      document.body.appendChild(screenshotDiv);
+    };
+  }
+
+  function enableLoop(control, player) {
+    control.onclick = function() {
+      var svg = control.getElementsByTagName('svg')[0];
+      var video = player.getElementsByTagName('video')[0];
+      var active = svg.classList.contains('control-active');
+      if (active) {
+        svg.classList.remove('control-active');
+        video.loop = false;
+      } else {
+        svg.classList.add('control-active');
+        video.loop = true;
+      }
+    }
+  }
+
   function createCustomControl(svgUri, template) {
     var customControl = template.cloneNode(true);
     customControl.getElementsByTagName('text')[0].innerHTML = svgUri;
@@ -70,6 +94,9 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
     player.addEventListener('webkitfullscreenchange', function(e) {
       enableFullscreenStyles(customControlsList, document.webkitIsFullScreen);
     });
+
+    enableScreenshot(screenshotControl);
+    enableLoop(repeatControl, player);
   }
 
   return {

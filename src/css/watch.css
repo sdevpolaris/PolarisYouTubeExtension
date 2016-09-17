@@ -107,3 +107,16 @@ svg.watch-custom-control-fullscreen text {
   font-size: 23px;
   fill: white;
 }
+
+svg.control-active text {
+  fill: green;
+}
+
+.custom-bottom-right-overlay {
+  width: 300px;
+  height: 300px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+}
