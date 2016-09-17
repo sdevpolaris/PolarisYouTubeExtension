@@ -101,3 +101,9 @@ svg.watch-custom-control text {
   font-size: 16px;
   fill: white;
 }
+
+svg.watch-custom-control-fullscreen text {
+  font-family: FontAwesome;
+  font-size: 23px;
+  fill: white;
+}
