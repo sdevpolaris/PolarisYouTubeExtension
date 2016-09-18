@@ -113,8 +113,6 @@ svg.control-active text {
 }
 
 .custom-bottom-right-overlay {
-  width: 300px;
-  height: 300px;
   position: fixed;
   bottom: 0;
   right: 0;

@@ -5,19 +5,58 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
   // className for the preview tooltip that popups when you hover the progress bar:
   // ytp-tooltip ytp-bottom ytp-preview, the previews
 
-  function enableScreenshot(control) {
+  function enableScreenshot(control, video) {
     control.onclick = function() {
       var screenshotDiv = document.createElement('div');
       screenshotDiv.id = 'screenshotDivId';
       screenshotDiv.className = 'custom-bottom-right-overlay yt-card';
+
+      var aspectRatio = video.videoWidth / video.videoHeight;
+      var width = video.videoWidth;
+      var height = Math.round(video.videoWidth / aspectRatio);
+
+      // Dimension for previews, 16:9 240p
+
+      var lowResWidth = 426;
+      var lowResHeight = 240;
+
+      var canvasPreview = document.createElement('canvas');
+      canvasPreview.width = lowResWidth;
+      canvasPreview.height = lowResHeight;
+
+      var canvasFull = document.createElement('canvas');
+      canvasFull.width = width;
+      canvasFull.height = height;
+
+      var ctxPreview = canvasPreview.getContext('2d');
+      var ctxFull = canvasFull.getContext('2d');
+
+      // Draw the full resolution screenshot first
+
+      ctxFull.drawImage(video, 0, 0, width, height);
+
+      // Draw the previous based on the full size canvas
+
+      ctxPreview.drawImage(canvasFull, 0, 0, lowResWidth, lowResHeight);
+
+      screenshotDiv.appendChild(canvasPreview);
       document.body.appendChild(screenshotDiv);
+
+      screenshotDiv.onclick = function() {
+        var screenshotImg = new Image();
+        screenshotImg.src = canvasFull.toDataURL('image/png');
+        var win = window.open('', 'Screenshot');
+        win.document.body.appendChild(screenshotImg);
+      }
     };
   }
 
-  function enableLoop(control, player) {
+  // Function to enable the loop function
+  // Fortunately the YouTube html5 video supports attribute loop, which can be set to enable or disable looping
+
+  function enableLoop(control, video) {
     control.onclick = function() {
       var svg = control.getElementsByTagName('svg')[0];
-      var video = player.getElementsByTagName('video')[0];
       var active = svg.classList.contains('control-active');
       if (active) {
         svg.classList.remove('control-active');
@@ -95,8 +134,10 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
       enableFullscreenStyles(customControlsList, document.webkitIsFullScreen);
     });
 
-    enableScreenshot(screenshotControl);
-    enableLoop(repeatControl, player);
+    var video = player.getElementsByTagName('video')[0];
+
+    enableScreenshot(screenshotControl, video);
+    enableLoop(repeatControl, video);
   }
 
   return {
