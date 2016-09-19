@@ -45,7 +45,7 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
       screenshotDiv.onclick = function() {
         var screenshotImg = new Image();
         screenshotImg.src = canvasFull.toDataURL('image/png');
-        var win = window.open('', 'Screenshot');
+        var win = window.open();
         win.document.body.appendChild(screenshotImg);
       }
     };
@@ -96,11 +96,22 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
 
   function insertCustomPlayerControls() {
     var bottomRightControls = document.querySelectorAll('.ytp-chrome-bottom .ytp-right-controls')[0];
-    var settingsControl = bottomRightControls.getElementsByClassName('ytp-settings-button')[0];
+
+    var alreadyInserted = bottomRightControls.getAttribute('custom-controls-inserted');
+
+    // If the controls are already inserted, quit this function immediately
+
+    if ('true' === alreadyInserted) {
+      return;
+    }
+
+    bottomRightControls.setAttribute('custom-controls-inserted', 'true');
+
+    var fullscreenControl = bottomRightControls.getElementsByClassName('ytp-fullscreen-button')[0];
 
     // Cloning the existing settings control button as a template
 
-    var controlTemplate = settingsControl.cloneNode(false);
+    var controlTemplate = fullscreenControl.cloneNode(false);
     controlTemplate.innerHTML = '\
     <svg class="watch-custom-control" height="100%" width="100%"> \
       <g> \
