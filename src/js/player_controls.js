@@ -152,12 +152,12 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
         svg.classList.remove('watch-custom-control');
         svg.classList.add('watch-custom-control-fullscreen');
         text.attributes[0].value = "15";
-        text.attributes[1].value = "37";
+        text.attributes[1].value = "36";
       } else {
         svg.classList.remove('watch-custom-control-fullscreen');
         svg.classList.add('watch-custom-control');
-        text.attributes[0].value = "10";
-        text.attributes[1].value = "24.5";
+        text.attributes[0].value = "9";
+        text.attributes[1].value = "24";
       }
     }
   }
@@ -183,7 +183,7 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
     controlTemplate.innerHTML = '\
     <svg class="watch-custom-control" height="100%" width="100%"> \
       <g> \
-        <text x="10" y="24.5">&#xf030;</text> \
+        <text x="9" y="24">&#xf030;</text> \
       </g> \
     </svg>';
 

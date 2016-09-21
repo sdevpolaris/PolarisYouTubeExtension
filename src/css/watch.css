@@ -115,7 +115,7 @@ svg.control-active text {
 .custom-bottom-right-overlay {
   position: fixed;
   bottom: 0;
-  right: 0;
+  right: 1%;
   z-index: 10;
 }
 
