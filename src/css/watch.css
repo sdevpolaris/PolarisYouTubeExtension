@@ -118,3 +118,33 @@ svg.control-active text {
   right: 0;
   z-index: 10;
 }
+
+#screenshotHeader .yt-uix-button {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+#screenshot-close {
+  float: right;
+}
+
+#screenshotFooter {
+  text-align: center;
+}
+
+#screenshotFooter .yt-uix-button {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.screenshot-text {
+  font-weight: 500;
+  margin-left: 5px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.screenshot-container {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}

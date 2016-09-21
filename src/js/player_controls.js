@@ -7,9 +7,69 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
 
   function enableScreenshot(control, video) {
     control.onclick = function() {
-      var screenshotDiv = document.createElement('div');
-      screenshotDiv.id = 'screenshotDivId';
-      screenshotDiv.className = 'custom-bottom-right-overlay yt-card';
+      var screenshotDiv = document.getElementById('screenshotDivId');
+      var fullsizeBtn;
+      var downloadPreviewBtn;
+      var downloadFullsizeBtn;
+
+      if (!screenshotDiv) {
+        screenshotDiv = document.createElement('div');
+        screenshotDiv.id = 'screenshotDivId';
+        screenshotDiv.className = 'custom-bottom-right-overlay yt-card';
+
+        var screenshotHeaderDiv = document.createElement('div');
+        screenshotHeaderDiv.id = 'screenshotHeader';
+        screenshotHeaderDiv.className = 'screenshot-container';
+        screenshotHeaderDiv.innerHTML = '<span class="screenshot-text">Preview: (426 x 240p, 16:9)</span>';
+
+        var closeBtn = document.createElement('button');
+        closeBtn.id = 'screenshot-close';
+        closeBtn.className = 'yt-uix-button yt-uix-button-size-default yt-uix-button-default';
+        closeBtn.innerHTML = '<span class="yt-uix-button-content">Close</span>';
+
+        closeBtn.onclick = function() {
+          screenshotDiv.classList.add('watch-hide');
+        };
+
+        fullsizeBtn = document.createElement('button');
+        fullsizeBtn.id = 'screenshot-fullsize';
+        fullsizeBtn.className = 'yt-uix-button yt-uix-button-size-default yt-uix-button-default';
+        fullsizeBtn.innerHTML = '<span class="yt-uix-button-content">See full size</span>';
+
+        screenshotHeaderDiv.appendChild(fullsizeBtn);
+        screenshotHeaderDiv.appendChild(closeBtn);
+
+        screenshotDiv.appendChild(screenshotHeaderDiv);
+
+        var screenshotFooterDiv = document.createElement('div');
+        screenshotFooterDiv.id = 'screenshotFooter';
+        screenshotFooterDiv.className = 'screenshot-container';
+
+        downloadPreviewBtn = document.createElement('a');
+        downloadPreviewBtn.id = 'screenshot-dl-preview';
+        downloadPreviewBtn.className = 'yt-uix-button yt-uix-button-size-default yt-uix-button-default';
+        downloadPreviewBtn.innerHTML = '<span class="yt-uix-button-content">Download Preview</span>';
+
+        downloadFullsizeBtn = document.createElement('a');
+        downloadFullsizeBtn.id = 'screenshot-dl-preview';
+        downloadFullsizeBtn.className = 'yt-uix-button yt-uix-button-size-default yt-uix-button-default';
+        downloadFullsizeBtn.innerHTML = '<span class="yt-uix-button-content">Download Fullsize</span>';
+
+        screenshotFooterDiv.appendChild(downloadPreviewBtn);
+        screenshotFooterDiv.appendChild(downloadFullsizeBtn);
+
+        screenshotDiv.appendChild(screenshotFooterDiv);
+
+        document.body.appendChild(screenshotDiv);
+      }
+
+      screenshotDiv.classList.remove('watch-hide');
+      fullsizeBtn = document.getElementById('screenshot-fullsize');
+
+      var oldPreview = screenshotDiv.getElementsByTagName('canvas')[0];
+      if (oldPreview) {
+        screenshotDiv.removeChild(oldPreview);
+      }
 
       var aspectRatio = video.videoWidth / video.videoHeight;
       var width = video.videoWidth;
@@ -39,15 +99,21 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
 
       ctxPreview.drawImage(canvasFull, 0, 0, lowResWidth, lowResHeight);
 
-      screenshotDiv.appendChild(canvasPreview);
-      document.body.appendChild(screenshotDiv);
+      screenshotDiv.insertBefore(canvasPreview, screenshotDiv.children[1]);
 
-      screenshotDiv.onclick = function() {
-        var screenshotImg = new Image();
-        screenshotImg.src = canvasFull.toDataURL('image/png');
+      var screenshotImgFullsize = new Image();
+      var screenshotImgPreviewURL = canvasPreview.toDataURL('image/png');
+      var screenshotImgFullsizeURL = canvasFull.toDataURL('image/png');
+      screenshotImgFullsize.src = screenshotImgFullsizeURL;
+      downloadPreviewBtn.setAttribute('href', screenshotImgPreviewURL);
+      downloadPreviewBtn.setAttribute('download', 'screenshot-preview.png');
+      downloadFullsizeBtn.setAttribute('href', screenshotImgFullsizeURL);
+      downloadFullsizeBtn.setAttribute('download', 'screenshot-full.png');
+
+      fullsizeBtn.onclick = function() {
         var win = window.open();
-        win.document.body.appendChild(screenshotImg);
-      }
+        win.document.body.appendChild(screenshotImgFullsize);
+      };
     };
   }
 
