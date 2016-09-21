@@ -51,7 +51,7 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
         downloadPreviewBtn.innerHTML = '<span class="yt-uix-button-content">Download Preview</span>';
 
         downloadFullsizeBtn = document.createElement('a');
-        downloadFullsizeBtn.id = 'screenshot-dl-preview';
+        downloadFullsizeBtn.id = 'screenshot-dl-full';
         downloadFullsizeBtn.className = 'yt-uix-button yt-uix-button-size-default yt-uix-button-default';
         downloadFullsizeBtn.innerHTML = '<span class="yt-uix-button-content">Download Fullsize</span>';
 
@@ -65,6 +65,8 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
 
       screenshotDiv.classList.remove('watch-hide');
       fullsizeBtn = document.getElementById('screenshot-fullsize');
+      downloadPreviewBtn = document.getElementById('screenshot-dl-preview');
+      downloadFullsizeBtn = document.getElementById('screenshot-dl-full');
 
       var oldPreview = screenshotDiv.getElementsByTagName('canvas')[0];
       if (oldPreview) {
