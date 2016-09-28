@@ -104,14 +104,30 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
       screenshotDiv.insertBefore(canvasPreview, screenshotDiv.children[1]);
 
       var screenshotImgFullsize = new Image();
-      var screenshotImgPreviewURL = canvasPreview.toDataURL('image/png');
       var screenshotImgFullsizeURL = canvasFull.toDataURL('image/png');
-      screenshotImgFullsize.src = screenshotImgFullsizeURL;
-      downloadPreviewBtn.setAttribute('href', screenshotImgPreviewURL);
+
+      // Need to use blobs to store the data from the canvas elements since
+      // we cannot directly use toDataUrl function from canvas objects as
+      // the function returns a long string of URL that has the content embedded in the URL
+
+      // Long URLs are rejected by the browser and will not complete the download.
+      // Blobs have URLs that is generated using the current domain name (youtube.com) prepended
+      // to a unique identifier, which will never go past the URL length limit of the browser
+
+      canvasPreview.toBlob(function(blob) {
+        var blobUrl = URL.createObjectURL(blob);
+        downloadPreviewBtn.setAttribute('href', blobUrl);
+      });
+
+      canvasFull.toBlob(function(blob) {
+        var blobUrl = URL.createObjectURL(blob);
+        downloadFullsizeBtn.setAttribute('href', blobUrl);
+      });
+
       downloadPreviewBtn.setAttribute('download', 'screenshot-preview.png');
-      downloadFullsizeBtn.setAttribute('href', screenshotImgFullsizeURL);
       downloadFullsizeBtn.setAttribute('download', 'screenshot-full.png');
 
+      screenshotImgFullsize.src = screenshotImgFullsizeURL;
       fullsizeBtn.onclick = function() {
         var win = window.open();
         win.document.body.appendChild(screenshotImgFullsize);
@@ -193,6 +209,14 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
     var customControlsList = [];
     var screenshotControl = createCustomControl('&#xf030;', controlTemplate);
     var repeatControl = createCustomControl('&#xf01e;', controlTemplate);
+
+    // Add our custom tooltips to the controls here
+
+    screenshotControl.classList.add('yt-uix-tooltip');
+    screenshotControl.setAttribute('title', 'Screenshot');
+
+    repeatControl.classList.add('yt-uix-tooltip');
+    repeatControl.setAttribute('title', 'Loop Video');
 
     customControlsList.push(screenshotControl);
     customControlsList.push(repeatControl);
