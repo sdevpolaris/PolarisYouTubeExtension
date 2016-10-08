@@ -2,137 +2,166 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
 
   'use strict';
 
-  // className for the preview tooltip that popups when you hover the progress bar:
-  // ytp-tooltip ytp-bottom ytp-preview, the previews
+  // Master function to enable the preview panel on the bottom right
+  // This is shared between taking a screenshot and showing the thumbnail
+  // type - 'video' or 'image'
 
-  function enableScreenshot(control, video) {
-    control.onclick = function() {
-      var screenshotDiv = document.getElementById('screenshotDivId');
-      var fullsizeBtn;
-      var downloadPreviewBtn;
-      var downloadFullsizeBtn;
+  function enablePreviewPanel(control, source, type) {
+    var screenshotDiv = document.getElementById('screenshotDivId');
+    var fullsizeBtn;
+    var previewText;
+    var downloadPreviewBtn;
+    var downloadFullsizeBtn;
 
-      if (!screenshotDiv) {
-        screenshotDiv = document.createElement('div');
-        screenshotDiv.id = 'screenshotDivId';
-        screenshotDiv.className = 'custom-bottom-right-overlay yt-card';
+    if (!screenshotDiv) {
+      screenshotDiv = document.createElement('div');
+      screenshotDiv.id = 'screenshotDivId';
+      screenshotDiv.className = 'custom-bottom-right-overlay yt-card';
 
-        var screenshotHeaderDiv = document.createElement('div');
-        screenshotHeaderDiv.id = 'screenshotHeader';
-        screenshotHeaderDiv.className = 'screenshot-container';
-        screenshotHeaderDiv.innerHTML = '<span class="screenshot-text">Preview: (426 x 240p, 16:9)</span>';
+      var screenshotHeaderDiv = document.createElement('div');
+      screenshotHeaderDiv.id = 'screenshotHeader';
+      screenshotHeaderDiv.className = 'screenshot-container';
+      screenshotHeaderDiv.innerHTML = '<span class="screenshot-text">Preview: (426 x 240p, 16:9)</span>';
 
-        var closeBtn = document.createElement('button');
-        closeBtn.id = 'screenshot-close';
-        closeBtn.className = 'yt-uix-button yt-uix-button-size-default yt-uix-button-default';
-        closeBtn.innerHTML = '<span class="yt-uix-button-content">Close</span>';
+      var closeBtn = document.createElement('button');
+      closeBtn.id = 'screenshot-close';
+      closeBtn.className = 'yt-uix-button yt-uix-button-size-default yt-uix-button-default';
+      closeBtn.innerHTML = '<span class="yt-uix-button-content">Close</span>';
 
-        closeBtn.onclick = function() {
-          screenshotDiv.classList.add('watch-hide');
-        };
+      closeBtn.onclick = function() {
+        screenshotDiv.classList.add('watch-hide');
+      };
 
-        fullsizeBtn = document.createElement('button');
-        fullsizeBtn.id = 'screenshot-fullsize';
-        fullsizeBtn.className = 'yt-uix-button yt-uix-button-size-default yt-uix-button-default';
-        fullsizeBtn.innerHTML = '<span class="yt-uix-button-content">See full size</span>';
+      screenshotHeaderDiv.appendChild(closeBtn);
 
-        screenshotHeaderDiv.appendChild(fullsizeBtn);
-        screenshotHeaderDiv.appendChild(closeBtn);
+      screenshotDiv.appendChild(screenshotHeaderDiv);
 
-        screenshotDiv.appendChild(screenshotHeaderDiv);
+      var screenshotFooterDiv = document.createElement('div');
+      screenshotFooterDiv.id = 'screenshotFooter';
+      screenshotFooterDiv.className = 'screenshot-container';
 
-        var screenshotFooterDiv = document.createElement('div');
-        screenshotFooterDiv.id = 'screenshotFooter';
-        screenshotFooterDiv.className = 'screenshot-container';
+      downloadPreviewBtn = document.createElement('a');
+      downloadPreviewBtn.id = 'screenshot-dl-preview';
+      downloadPreviewBtn.className = 'yt-uix-button yt-uix-button-size-default yt-uix-button-default';
+      downloadPreviewBtn.innerHTML = '<span class="yt-uix-button-content">Download Preview</span>';
 
-        downloadPreviewBtn = document.createElement('a');
-        downloadPreviewBtn.id = 'screenshot-dl-preview';
-        downloadPreviewBtn.className = 'yt-uix-button yt-uix-button-size-default yt-uix-button-default';
-        downloadPreviewBtn.innerHTML = '<span class="yt-uix-button-content">Download Preview</span>';
+      fullsizeBtn = document.createElement('a');
+      fullsizeBtn.id = 'screenshot-fullsize';
+      fullsizeBtn.className = 'yt-uix-button yt-uix-button-size-default yt-uix-button-default';
+      fullsizeBtn.innerHTML = '<span class="yt-uix-button-content">See full size</span>';
 
-        downloadFullsizeBtn = document.createElement('a');
-        downloadFullsizeBtn.id = 'screenshot-dl-full';
-        downloadFullsizeBtn.className = 'yt-uix-button yt-uix-button-size-default yt-uix-button-default';
-        downloadFullsizeBtn.innerHTML = '<span class="yt-uix-button-content">Download Fullsize</span>';
+      downloadFullsizeBtn = document.createElement('a');
+      downloadFullsizeBtn.id = 'screenshot-dl-full';
+      downloadFullsizeBtn.className = 'yt-uix-button yt-uix-button-size-default yt-uix-button-default';
+      downloadFullsizeBtn.innerHTML = '<span class="yt-uix-button-content">Download Fullsize</span>';
 
-        screenshotFooterDiv.appendChild(downloadPreviewBtn);
-        screenshotFooterDiv.appendChild(downloadFullsizeBtn);
+      screenshotFooterDiv.appendChild(downloadPreviewBtn);
+      screenshotFooterDiv.appendChild(fullsizeBtn);
+      screenshotFooterDiv.appendChild(downloadFullsizeBtn);
 
-        screenshotDiv.appendChild(screenshotFooterDiv);
+      screenshotDiv.appendChild(screenshotFooterDiv);
 
-        document.body.appendChild(screenshotDiv);
-      }
+      document.body.appendChild(screenshotDiv);
+    }
 
-      screenshotDiv.classList.remove('watch-hide');
-      fullsizeBtn = document.getElementById('screenshot-fullsize');
-      downloadPreviewBtn = document.getElementById('screenshot-dl-preview');
-      downloadFullsizeBtn = document.getElementById('screenshot-dl-full');
+    screenshotDiv.classList.remove('watch-hide');
+    fullsizeBtn = document.getElementById('screenshot-fullsize');
+    previewText = document.getElementById('screenshotHeader').getElementsByTagName('span')[0];
+    downloadPreviewBtn = document.getElementById('screenshot-dl-preview');
+    downloadFullsizeBtn = document.getElementById('screenshot-dl-full');
 
-      var oldPreview = screenshotDiv.getElementsByTagName('canvas')[0];
-      if (oldPreview) {
-        screenshotDiv.removeChild(oldPreview);
-      }
+    var oldPreview = screenshotDiv.getElementsByTagName('canvas')[0];
+    if (oldPreview) {
+      screenshotDiv.removeChild(oldPreview);
+    }
 
-      var aspectRatio = video.videoWidth / video.videoHeight;
-      var width = video.videoWidth;
-      var height = Math.round(video.videoWidth / aspectRatio);
+    var aspectRatio;
+    var width;
+    var height;
 
-      // Dimension for previews, 16:9 240p
+    if (type === 'video') {
+      aspectRatio = source.videoWidth / source.videoHeight;
+      width = source.videoWidth;
+      height = Math.round(width / aspectRatio);
 
-      var lowResWidth = 426;
-      var lowResHeight = 240;
-
-      var canvasPreview = document.createElement('canvas');
-      canvasPreview.width = lowResWidth;
-      canvasPreview.height = lowResHeight;
-
-      var canvasFull = document.createElement('canvas');
-      canvasFull.width = width;
-      canvasFull.height = height;
-
-      var ctxPreview = canvasPreview.getContext('2d');
-      var ctxFull = canvasFull.getContext('2d');
-
-      // Draw the full resolution screenshot first
-
-      ctxFull.drawImage(video, 0, 0, width, height);
-
-      // Draw the previous based on the full size canvas
-
-      ctxPreview.drawImage(canvasFull, 0, 0, lowResWidth, lowResHeight);
-
-      screenshotDiv.insertBefore(canvasPreview, screenshotDiv.children[1]);
-
-      var screenshotImgFullsize = new Image();
-      var screenshotImgFullsizeURL = canvasFull.toDataURL('image/png');
-
-      // Need to use blobs to store the data from the canvas elements since
-      // we cannot directly use toDataUrl function from canvas objects as
-      // the function returns a long string of URL that has the content embedded in the URL
-
-      // Long URLs are rejected by the browser and will not complete the download.
-      // Blobs have URLs that is generated using the current domain name (youtube.com) prepended
-      // to a unique identifier, which will never go past the URL length limit of the browser
-
-      canvasPreview.toBlob(function(blob) {
-        var blobUrl = URL.createObjectURL(blob);
-        downloadPreviewBtn.setAttribute('href', blobUrl);
-      });
-
-      canvasFull.toBlob(function(blob) {
-        var blobUrl = URL.createObjectURL(blob);
-        downloadFullsizeBtn.setAttribute('href', blobUrl);
-      });
-
+      previewText.innerHTML = 'Screenshot Preview: (426 x 240p, 16:9)';
       downloadPreviewBtn.setAttribute('download', 'screenshot-preview.png');
       downloadFullsizeBtn.setAttribute('download', 'screenshot-full.png');
+    } else {
+      aspectRatio = source.width / source.height;
+      width = source.width;
+      height = Math.round(width / aspectRatio);
 
-      screenshotImgFullsize.src = screenshotImgFullsizeURL;
-      fullsizeBtn.onclick = function() {
-        var win = window.open();
-        win.document.body.appendChild(screenshotImgFullsize);
-      };
+      previewText.innerHTML = 'Thumbnail Preview: (426 x 240p, 16:9)';
+      downloadPreviewBtn.setAttribute('download', 'thumbnail-preview.png');
+      downloadFullsizeBtn.setAttribute('download', 'thumbnail-full.png');
+    }
+
+    // Dimension for previews, 16:9 240p
+
+    var lowResWidth = 426;
+    var lowResHeight = 240;
+
+    var canvasPreview = document.createElement('canvas');
+    canvasPreview.width = lowResWidth;
+    canvasPreview.height = lowResHeight;
+
+    var canvasFull = document.createElement('canvas');
+    canvasFull.width = width;
+    canvasFull.height = height;
+
+    var ctxPreview = canvasPreview.getContext('2d');
+    var ctxFull = canvasFull.getContext('2d');
+
+    // Draw the full resolution screenshot first
+
+    ctxFull.drawImage(source, 0, 0, width, height);
+
+    // Draw the previous based on the full size canvas
+
+    ctxPreview.drawImage(canvasFull, 0, 0, lowResWidth, lowResHeight);
+
+    screenshotDiv.insertBefore(canvasPreview, screenshotDiv.children[1]);
+
+    var screenshotImgFullsize = new Image();
+    var screenshotImgFullsizeURL = canvasFull.toDataURL('image/png');
+
+    // Need to use blobs to store the data from the canvas elements since
+    // we cannot directly use toDataUrl function from canvas objects as
+    // the function returns a long string of URL that has the content embedded in the URL
+
+    // Long URLs are rejected by the browser and will not complete the download.
+    // Blobs have URLs that is generated using the current domain name (youtube.com) prepended
+    // to a unique identifier, which will never go past the URL length limit of the browser
+
+    canvasPreview.toBlob(function(blob) {
+      var blobUrl = URL.createObjectURL(blob);
+      downloadPreviewBtn.setAttribute('href', blobUrl);
+    });
+
+    canvasFull.toBlob(function(blob) {
+      var blobUrl = URL.createObjectURL(blob);
+      downloadFullsizeBtn.setAttribute('href', blobUrl);
+    });
+
+    screenshotImgFullsize.src = screenshotImgFullsizeURL;
+    fullsizeBtn.onclick = function() {
+      var win = window.open();
+      win.document.body.appendChild(screenshotImgFullsize);
     };
+  }
+
+  // Return the thumb nail url that has the highest resolution available
+
+  function getThumbnailURL() {
+    if (ytconfigs.iurlmaxres_webp) {
+      return ytconfigs.iurlmaxres_webp;
+    } else if (ytconfigs.iurlsd_webp) {
+      return ytconfigs.iurlsd_webp;
+    } else if (ytconfigs.iurlhq_webp) {
+      return ytconfigs.iurlhq_webp;
+    }
+    return ytconfigs.iurl_webp;
   }
 
   // Function to enable the loop function
@@ -209,6 +238,7 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
     var customControlsList = [];
     var screenshotControl = createCustomControl('&#xf030;', controlTemplate);
     var repeatControl = createCustomControl('&#xf01e;', controlTemplate);
+    var thumbnailControl = createCustomControl('&#xf03e;', controlTemplate);
 
     // Add our custom tooltips to the controls here
 
@@ -218,8 +248,12 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
     repeatControl.classList.add('yt-uix-tooltip');
     repeatControl.setAttribute('title', 'Loop Video');
 
+    thumbnailControl.classList.add('yt-uix-tooltip');
+    thumbnailControl.setAttribute('title', 'See Thumbnail');
+
     customControlsList.push(screenshotControl);
     customControlsList.push(repeatControl);
+    customControlsList.push(thumbnailControl);
 
     // Insert all of the custom controls to the right hand list of controls
 
@@ -239,7 +273,36 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
 
     var video = player.getElementsByTagName('video')[0];
 
-    enableScreenshot(screenshotControl, video);
+    screenshotControl.onclick = function() {
+      enablePreviewPanel(screenshotControl, video, 'video');
+    };
+
+    thumbnailControl.onclick = function() {
+      var thumbnail = new Image();
+
+      // Need to load the content of the thumbnail into a blob to bypass the cross origin restriction
+      // We need to use ajax to get the content and pass it into an image's src, and then listen for
+      // the onload event to get the correct dimensions and enable the control
+
+      // Without doing this, the canvas in the popup will be "tainted" and therefore cannot be downloaded as a file
+
+      thumbnail.onload = function() {
+        enablePreviewPanel(thumbnailControl, thumbnail, 'image');
+      };
+
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200 || xhr.status === 304) {
+            thumbnail.src = URL.createObjectURL(xhr.response);
+          }
+        }
+      };
+      xhr.open('GET', getThumbnailURL(), true);
+      xhr.responseType = 'blob';
+      xhr.send();
+    }
+
     enableLoop(repeatControl, video);
   }
 

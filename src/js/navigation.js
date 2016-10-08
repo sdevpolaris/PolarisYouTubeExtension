@@ -29,14 +29,8 @@
     }
   }
 
-  function globalNavigationHandler(event) {
-    var destURL;
-
-    if (event === null) {
-      destURL = window.location.href;
-    } else {
-      destURL = event.detail.url;
-    }
+  function performActions() {
+    var destURL = window.location.href;
 
     // Check for YouTube's domain (Could be unnecessary since spfdone event can only be received on YouTube)
 
@@ -50,13 +44,25 @@
         performAllActions(uiSettings.watch, polarisYT);
         performAllActions(uiSettings.player, polarisYT);
       }
-
     }    
   }
 
+  function globalNavigationHandler() {
+    var requestEvent = new CustomEvent('PolarisYTConfigsRequest', {from: 'content'});
+    document.dispatchEvent(requestEvent);
+  }
+
+  // Listen for our custom event response to get the YouTube's window object
+
+  document.addEventListener('PolarisYTConfigsResponse', function(e) {
+    ytconfigs = e.detail;
+    console.log(ytconfigs.iurlhq_webp);
+    performActions();
+  });
+
   // Handler call to first visit to any YouTube page (via content script injection through declaration in manifest)
 
-  globalNavigationHandler(null);
+  globalNavigationHandler();
 
   // Handler call to subsequent visits to YouTube pages (when YouTube's spfjs is already running)
 

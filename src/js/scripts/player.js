@@ -1,3 +1,6 @@
+// This file contains functions that will be injected into the context of YouTube's
+// actual web pages
+
 function removeAnnotationWrapper(create) {
   return function () {
     window.ytplayer.config.args.iv_load_policy = "3";
@@ -7,9 +10,9 @@ function removeAnnotationWrapper(create) {
   };
 }
 
-window.onYouTubePlayerReady = function(playerId) {
-}
+// This custom event is used to pass YouTube's player configuration properties
 
-// document.documentElement.addEventListener("load", function () {
-//   window.yt.player.Application.create = removeAnnotationWrapper(window.yt.player.Application.create);
-// }, true);
+document.addEventListener('PolarisYTConfigsRequest', function(e) {
+  var resp = new CustomEvent('PolarisYTConfigsResponse', {'detail': window.ytplayer.config.args});
+  document.dispatchEvent(resp);
+});

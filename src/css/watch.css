@@ -119,6 +119,10 @@ svg.control-active text {
   z-index: 10;
 }
 
+#screenshotHeader {
+  line-height: 28px;
+}
+
 #screenshotHeader .yt-uix-button {
   margin-left: 6px;
   margin-right: 6px;

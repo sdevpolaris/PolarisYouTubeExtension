@@ -1,5 +1,7 @@
 var polarisYT = {};
 
+var ytconfigs = {};
+
 var uiSettings = (function(){
 
   'use strict';
@@ -31,5 +33,4 @@ var uiSettings = (function(){
       YT_WATCH_PAGE_HIDE_RECOMMEND       : hideRecommendations
     }
   };
-
 })();
