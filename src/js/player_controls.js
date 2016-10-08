@@ -2,6 +2,43 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
 
   'use strict';
 
+  function showLoadingOverlay(displayText) {
+    var loadingDiv = document.getElementById('loadingDivId');
+
+    if (!loadingDiv) {
+      loadingDiv = document.createElement('div');
+      loadingDiv.id = 'loadingDivId';
+      loadingDiv.className = 'custom-bottom-right-overlay';
+
+      var loadingIconDiv = document.createElement('div');
+
+      var loadingIcon = document.createElement('i');
+      loadingIcon.id = 'customLoadingIcon';
+      loadingIcon.className = 'fa fa-spinner fa-spin';
+
+      loadingIconDiv.appendChild(loadingIcon);
+
+      var loadingFooterDiv = document.createElement('div');
+      loadingFooterDiv.id = 'loadingFooter';
+      loadingFooterDiv.className = 'screenshot-container';
+      loadingFooterDiv.innerHTML = '<span class="custom-header-text">' + displayText + '</span>';
+
+      loadingDiv.appendChild(loadingIconDiv);
+      loadingDiv.appendChild(loadingFooterDiv);
+      document.body.appendChild(loadingDiv);
+    }
+
+    loadingDiv.getElementsByTagName('span').innerHTML = displayText;
+    loadingDiv.classList.remove('watch-hide');
+  }
+
+  function hideLoadingOverlay() {
+    var loadingDiv = document.getElementById('loadingDivId');
+    if (loadingDiv) {
+      loadingDiv.classList.add('watch-hide');
+    }
+  }
+
   // Master function to enable the preview panel on the bottom right
   // This is shared between taking a screenshot and showing the thumbnail
   // type - 'video' or 'image'
@@ -21,7 +58,7 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
       var screenshotHeaderDiv = document.createElement('div');
       screenshotHeaderDiv.id = 'screenshotHeader';
       screenshotHeaderDiv.className = 'screenshot-container';
-      screenshotHeaderDiv.innerHTML = '<span class="screenshot-text">Preview: (426 x 240p, 16:9)</span>';
+      screenshotHeaderDiv.innerHTML = '<span class="custom-header-text">Preview: (426 x 240p, 16:9)</span>';
 
       var closeBtn = document.createElement('button');
       closeBtn.id = 'screenshot-close';
@@ -149,19 +186,38 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
       var win = window.open();
       win.document.body.appendChild(screenshotImgFullsize);
     };
+
+    if ('image' === type) {
+      hideLoadingOverlay();
+    }
   }
 
-  // Return the thumb nail url that has the highest resolution available
+  // Return the thumbnail url that has the highest resolution
+  // The key that holds the thumbnail image in the config object is "iurl[quality][_webp]"
+  // Thumbnails stored on YouTube could be either a jpeg (no _webp) or webp (with _webp)
 
   function getThumbnailURL() {
-    if (ytconfigs.iurlmaxres_webp) {
-      return ytconfigs.iurlmaxres_webp;
-    } else if (ytconfigs.iurlsd_webp) {
-      return ytconfigs.iurlsd_webp;
-    } else if (ytconfigs.iurlhq_webp) {
-      return ytconfigs.iurlhq_webp;
+    var key_base = 'iurl';
+    var webp = '_webp';
+    var qualityList = ['maxres', 'sd', 'hq', '', 'mq'];
+
+    // Quality list is sorted from highest res to lowest
+    // We want to return as soon as we find an existing one (highest resolution available)
+
+    for (var i in qualityList) {
+      var quality = qualityList[i];
+      var primary = key_base + quality;
+      var url = ytconfigs[primary];
+      if (url) {
+        return url;
+      }
+
+      var secondary = key_base + quality + webp;
+      url = ytconfigs[secondary];
+      if (url) {
+        return url;
+      }
     }
-    return ytconfigs.iurl_webp;
   }
 
   // Function to enable the loop function
@@ -278,6 +334,7 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
     };
 
     thumbnailControl.onclick = function() {
+      showLoadingOverlay('Loading Thumbnail');
       var thumbnail = new Image();
 
       // Need to load the content of the thumbnail into a blob to bypass the cross origin restriction

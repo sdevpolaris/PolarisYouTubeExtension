@@ -1,3 +1,5 @@
+/* Custom search styles */
+
 #custom-search-section {
   text-align: center;
 }
@@ -95,7 +97,8 @@
 }
 
 
-/* Bottom Player controls */
+/* Bottom Player custom control styles */
+
 svg.watch-custom-control text {
   font-family: FontAwesome;
   font-size: 16px;
@@ -143,7 +146,7 @@ svg.control-active text {
   margin-right: 8px;
 }
 
-.screenshot-text {
+.custom-header-text {
   font-weight: 500;
   margin-left: 5px;
   margin-right: 8px;
@@ -153,4 +156,13 @@ svg.control-active text {
 .screenshot-container {
   padding-top: 3px;
   padding-bottom: 3px;
+}
+
+#loadingDivId {
+  text-align: center;
+}
+
+#customLoadingIcon {
+  font-size: 70px;
+  color: purple;
 }

@@ -56,7 +56,6 @@
 
   document.addEventListener('PolarisYTConfigsResponse', function(e) {
     ytconfigs = e.detail;
-    console.log(ytconfigs.iurlhq_webp);
     performActions();
   });
 
