@@ -16,7 +16,7 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
     if (!screenshotDiv) {
       screenshotDiv = document.createElement('div');
       screenshotDiv.id = 'screenshotDivId';
-      screenshotDiv.className = 'custom-bottom-right-overlay yt-card';
+      screenshotDiv.className = 'custom-bottom-right-overlay';
 
       var screenshotHeaderDiv = document.createElement('div');
       screenshotHeaderDiv.id = 'screenshotHeader';

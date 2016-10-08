@@ -6,7 +6,8 @@
     "activeTab",
     "tabs",
     "storage",
-    "*://www.youtube.com/*"
+    "*://www.youtube.com/*",
+    "https://i.ytimg.com/*"
   ],
   "background": {
     "page": "src/html/background.html",

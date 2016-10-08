@@ -114,9 +114,11 @@ svg.control-active text {
 
 .custom-bottom-right-overlay {
   position: fixed;
-  bottom: 0;
-  right: 1%;
+  bottom: 2%;
+  right: 2%;
   z-index: 10;
+  background: white;
+  box-shadow: 0 1px 6px rgba(128, 0, 128, 0.7);
 }
 
 #screenshotHeader {
