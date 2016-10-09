@@ -13,6 +13,13 @@
     var dislikeUnclickBtn = likePanel.children[2].getElementsByClassName('yt-uix-button-content')[0];
     var dislikeClickBtn = likePanel.children[3].getElementsByClassName('yt-uix-button-content')[0];
 
+    // If any of the above four inner elements for displaying like/dislike numbers are not present, it means that
+    // the current video has disabled showing of likes/dislikes
+
+    if (!likeUnclickBtn) {
+      return;
+    }
+
     var likeUnclick = parseInt(likeUnclickBtn.innerHTML.split(',').join(''));
     var dislikeUnclick = parseInt(dislikeUnclickBtn.innerHTML.split(',').join(''));
     var totalUnclick = likeUnclick + dislikeUnclick;
