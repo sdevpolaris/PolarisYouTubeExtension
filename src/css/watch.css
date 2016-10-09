@@ -115,6 +115,13 @@ svg.control-active text {
   fill: green;
 }
 
+.custom-header-text {
+  font-weight: 500;
+  margin-left: 5px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
 .custom-bottom-right-overlay {
   position: fixed;
   bottom: 2%;
@@ -122,6 +129,19 @@ svg.control-active text {
   z-index: 10;
   background: white;
   box-shadow: 0 1px 6px rgba(128, 0, 128, 0.7);
+}
+
+/* Using more specific rules to override existing ones injected by YouTube when overlay is in fullscreen */
+
+.custom-bottom-right-overlay.fullscreen-overlay {
+  bottom: 10%;
+  color: black;
+  line-height: 1;
+  -webkit-font-smoothing: inherit;
+}
+
+.custom-bottom-right-overlay.fullscreen-overlay .custom-header-text {
+  font-size: 14px;
 }
 
 #screenshotHeader {
@@ -144,13 +164,6 @@ svg.control-active text {
 #screenshotFooter .yt-uix-button {
   margin-left: 8px;
   margin-right: 8px;
-}
-
-.custom-header-text {
-  font-weight: 500;
-  margin-left: 5px;
-  margin-right: 8px;
-  vertical-align: middle;
 }
 
 .screenshot-container {

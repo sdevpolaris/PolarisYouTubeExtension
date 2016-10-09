@@ -2,6 +2,13 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
 
   'use strict';
 
+  function isFullscreen() {
+    return document.webkitIsFullScreen;
+  }
+
+  // Loading overlay is used by showing thumbnail since it uses ajax call
+  // and since some videos have really high res photo as thumbnail
+
   function showLoadingOverlay(displayText) {
     var loadingDiv = document.getElementById('loadingDivId');
 
@@ -25,7 +32,14 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
 
       loadingDiv.appendChild(loadingIconDiv);
       loadingDiv.appendChild(loadingFooterDiv);
-      document.body.appendChild(loadingDiv);
+
+      if (isFullscreen()) {
+        var player = document.getElementById('movie_player');
+        loadingDiv.classList.add('fullscreen-overlay');
+        player.appendChild(loadingDiv);
+      } else {
+        document.body.appendChild(loadingDiv);
+      }
     }
 
     loadingDiv.getElementsByTagName('span').innerHTML = displayText;
@@ -98,7 +112,13 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
 
       screenshotDiv.appendChild(screenshotFooterDiv);
 
-      document.body.appendChild(screenshotDiv);
+      if (isFullscreen()) {
+        var player = document.getElementById('movie_player');
+        screenshotDiv.classList.add('fullscreen-overlay');
+        player.appendChild(screenshotDiv);
+      } else {
+        document.body.appendChild(screenshotDiv);
+      }
     }
 
     screenshotDiv.classList.remove('watch-hide');
@@ -243,13 +263,13 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
     return customControl;
   }
 
-  function enableFullscreenStyles(controls, isFullScreen) {
+  function toggleFullscreenStyles(controls) {
     for (var i = 0; i < controls.length; i++) {
       var control = controls[i];
       var text = control.getElementsByTagName('text')[0];
       var svg = control.getElementsByTagName('svg')[0];
 
-      if (isFullScreen) {
+      if (isFullscreen()) {
         svg.classList.remove('watch-custom-control');
         svg.classList.add('watch-custom-control-fullscreen');
         text.attributes[0].value = "15";
@@ -259,6 +279,32 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
         svg.classList.add('watch-custom-control');
         text.attributes[0].value = "9";
         text.attributes[1].value = "24";
+      }
+    }
+  }
+
+  function toggleFullscreenPreviews() {
+    var previewDiv = document.getElementById('screenshotDivId');
+    var loadingDiv = document.getElementById('loadingDivId');
+    var player = document.getElementById('movie_player');
+
+    if (isFullscreen()) {
+      if (previewDiv) {
+        previewDiv.classList.add('fullscreen-overlay');
+        player.appendChild(previewDiv);
+      }
+      if (loadingDiv) {
+        loadingDiv.classList.add('fullscreen-overlay');
+        player.appendChild(loadingDiv);
+      }
+    } else {
+      if (previewDiv) {
+        previewDiv.classList.remove('fullscreen-overlay');
+        document.body.appendChild(previewDiv);
+      }
+      if (loadingDiv) {
+        loadingDiv.classList.remove('fullscreen-overlay');
+        document.body.appendChild(loadingDiv);
       }
     }
   }
@@ -324,7 +370,8 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
 
     var player = document.getElementById('movie_player');
     player.addEventListener('webkitfullscreenchange', function(e) {
-      enableFullscreenStyles(customControlsList, document.webkitIsFullScreen);
+      toggleFullscreenStyles(customControlsList);
+      toggleFullscreenPreviews();
     });
 
     var video = player.getElementsByTagName('video')[0];
