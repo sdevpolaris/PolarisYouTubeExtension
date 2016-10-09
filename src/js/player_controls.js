@@ -246,39 +246,48 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
   function enableLoop(control, video) {
     control.onclick = function() {
       var svg = control.getElementsByTagName('svg')[0];
-      var active = svg.classList.contains('control-active');
+      var active = svg.classList.contains('fa-spin');
       if (active) {
-        svg.classList.remove('control-active');
+        svg.classList.remove('fa-spin');
         video.loop = false;
       } else {
-        svg.classList.add('control-active');
+        svg.classList.add('fa-spin');
         video.loop = true;
       }
     }
   }
 
-  function createCustomControl(svgUri, template) {
+  function createCustomControlObject(svgUri, template, normX, normY, fullX, fullY) {
     var customControl = template.cloneNode(true);
+    customControl.classList.remove('ytp-fullscreen-button');
     customControl.getElementsByTagName('text')[0].innerHTML = svgUri;
-    return customControl;
+
+    var wrapper = {};
+    wrapper.control = customControl;
+    wrapper.normX = normX;
+    wrapper.normY = normY;
+    wrapper.fullX = fullX;
+    wrapper.fullY = fullY;
+    return wrapper;
   }
 
-  function toggleFullscreenStyles(controls) {
-    for (var i = 0; i < controls.length; i++) {
-      var control = controls[i];
+  function toggleFullscreenStyles(controlObjs) {
+    for (var i = 0; i < controlObjs.length; i++) {
+      var controlObj = controlObjs[i];
+      var control = controlObj.control;
       var text = control.getElementsByTagName('text')[0];
       var svg = control.getElementsByTagName('svg')[0];
 
       if (isFullscreen()) {
         svg.classList.remove('watch-custom-control');
         svg.classList.add('watch-custom-control-fullscreen');
-        text.attributes[0].value = "15";
-        text.attributes[1].value = "36";
+        text.attributes[0].value = controlObj.fullX;
+        text.attributes[1].value = controlObj.fullY;
       } else {
         svg.classList.remove('watch-custom-control-fullscreen');
         svg.classList.add('watch-custom-control');
-        text.attributes[0].value = "9";
-        text.attributes[1].value = "24";
+        text.attributes[0].value = controlObj.normX;
+        text.attributes[1].value = controlObj.normY;
       }
     }
   }
@@ -330,7 +339,7 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
     controlTemplate.innerHTML = '\
     <svg class="watch-custom-control" height="100%" width="100%"> \
       <g> \
-        <text x="9" y="24">&#xf030;</text> \
+        <text x="11" y="24">&#xf030;</text> \
       </g> \
     </svg>';
 
@@ -338,9 +347,13 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
     // we directly reference by svg data uri
 
     var customControlsList = [];
-    var screenshotControl = createCustomControl('&#xf030;', controlTemplate);
-    var repeatControl = createCustomControl('&#xf01e;', controlTemplate);
-    var thumbnailControl = createCustomControl('&#xf03e;', controlTemplate);
+    var screenshotControlObj = createCustomControlObject('&#xf030;', controlTemplate, '9', '24', '15', '36');
+    var repeatControlObj = createCustomControlObject('&#xf01e;', controlTemplate, '11', '24', '17.5', '35');
+    var thumbnailControlObj = createCustomControlObject('&#xf03e;', controlTemplate, '9', '24', '15', '36');
+
+    var screenshotControl = screenshotControlObj.control;
+    var repeatControl = repeatControlObj.control;
+    var thumbnailControl = thumbnailControlObj.control;
 
     // Add our custom tooltips to the controls here
 
@@ -353,17 +366,21 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
     thumbnailControl.classList.add('yt-uix-tooltip');
     thumbnailControl.setAttribute('title', 'See Thumbnail');
 
-    customControlsList.push(screenshotControl);
-    customControlsList.push(repeatControl);
-    customControlsList.push(thumbnailControl);
+    customControlsList.push(screenshotControlObj);
+    customControlsList.push(repeatControlObj);
+    customControlsList.push(thumbnailControlObj);
 
     // Insert all of the custom controls to the right hand list of controls
 
     for (var i = 0; i < customControlsList.length; i++) {
-      var control = customControlsList[i];
+      var control = customControlsList[i].control;
       var firstChild = bottomRightControls.children[0];
       bottomRightControls.insertBefore(control, firstChild);
     }
+
+    // Toggle to refresh and apply custom coordinates for the first time
+
+    toggleFullscreenStyles(customControlsList);
 
     // Need to listen for the event when the player goes fullscreen, the bottom controls will change size
     // Bottom settings panel changes from height 36px -> 54px, need to update font sizes and svg text x-y coords

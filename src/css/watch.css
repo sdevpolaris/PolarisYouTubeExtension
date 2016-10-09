@@ -111,10 +111,6 @@ svg.watch-custom-control-fullscreen text {
   fill: white;
 }
 
-svg.control-active text {
-  fill: green;
-}
-
 .custom-header-text {
   font-weight: 500;
   margin-left: 5px;
