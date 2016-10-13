@@ -55,7 +55,14 @@
   // Listen for our custom event response to get the YouTube's window object
 
   document.addEventListener('PolarisYTConfigsResponse', function(e) {
-    ytconfigs = e.detail;
+    var response = e.detail;
+
+    // If the response is not present, fallback to older configs
+
+    if (response) {
+      ytconfigs = response;
+    }
+
     performActions();
   });
 
