@@ -1,10 +1,22 @@
 /* Custom search styles */
 
+/* sidebar-content is an existing youtube element */
+
+#watch7-sidebar-contents {
+  padding-top: 1px;
+}
+
 #custom-search-section {
   text-align: center;
 }
 
 #watch-custom-search-toggle {
+  margin-top: 5px;
+  margin-bottom: 0px;
+  border-top: none;
+}
+
+#watch-custom-search-related-toggle {
   margin-top: 5px;
   margin-bottom: 10px;
 }

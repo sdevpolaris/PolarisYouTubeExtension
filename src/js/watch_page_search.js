@@ -300,22 +300,29 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
     var sidebarSeparator = document.createElement('hr');
     sidebarSeparator.className = 'watch-custom-sidebar-separation-line';
 
+    // This toggle will switch between old related videos and search results
+
+    var relatedToggle = document.createElement('button');
+    relatedToggle.id = 'watch-custom-search-related-toggle';
+    relatedToggle.className = 'yt-uix-button yt-uix-button-default yt-uix-button-size-default';
+
+    var relatedToggleText = document.createElement('span');
+    relatedToggleText.className = 'yt-uix-button-content';
+    relatedToggleText.innerHTML = 'Switch to search results';
+
+    relatedToggle.appendChild(relatedToggleText);
+
     // This toggle will show and hide search options
 
     var searchDisplayToggle = document.createElement('button');
     searchDisplayToggle.id = 'watch-custom-search-toggle';
-    searchDisplayToggle.className = 'yt-uix-button yt-uix-button-default yt-uix-button-size-default';
+    searchDisplayToggle.className = 'yt-uix-button yt-uix-button-size-default yt-uix-button-expander';
 
     var searchDisplayToggleText = document.createElement('span');
     searchDisplayToggleText.className = 'yt-uix-button-content';
     searchDisplayToggleText.innerHTML = 'Hide Search Options';
 
     searchDisplayToggle.appendChild(searchDisplayToggleText);
-
-    // This toggle will switch between old related videos and search results
-
-    var relatedToggle = searchDisplayToggle.cloneNode(true);
-    relatedToggle.getElementsByTagName('span')[0].innerHTML = 'Switch to search results';
 
     // Overwriting onsubmit/onclick functions to use xhr
 
