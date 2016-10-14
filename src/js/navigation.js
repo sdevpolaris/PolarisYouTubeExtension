@@ -60,7 +60,8 @@
     // If the response is not present, fallback to older configs
 
     if (response) {
-      ytconfigs = response;
+      playerConfigs = response.player;
+      ytConfigs = response.master;
     }
 
     performActions();

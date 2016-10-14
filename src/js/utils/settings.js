@@ -1,20 +1,15 @@
 var polarisYT = {};
 
-var ytconfigs = {};
+var ytConfigs = {};
+var playerConfigs = {};
 
 var uiSettings = (function(){
 
   'use strict';
 
-  function isUserLoggedIn() {
-    var loginHeader = document.getElementById('yt-masthead-signin');
-    return loginHeader === null;
-  }
-
   // These settings will later be implemented into toggles in extension's options page
   // For now, simple default values
 
-  var loginStatus = isUserLoggedIn();
   var subFilter = true;
   var watchPageSearch = true;
   var showLikes = true;
@@ -22,7 +17,7 @@ var uiSettings = (function(){
 
   return {
     general : {
-      YT_SUBFILTER : subFilter && loginStatus
+      YT_SUBFILTER : subFilter
     },
     player : {
       YT_PLAYER_CUSTOM_CONTROLS : true

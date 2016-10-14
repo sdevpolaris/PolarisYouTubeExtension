@@ -72,6 +72,13 @@ polarisYT['YT_SUBFILTER'] = (function() {
   }
 
   function prepareSubscriptionFilter() {
+
+    // Do not inject the subscription filter if there is no user logged in
+
+    if (!ytConfigs.LOGGED_IN) {
+      return;
+    }
+
     var documentElement = document.documentElement;
     var isSidePanelLoaded = document.getElementsByClassName("guide-toplevel")[0] !== undefined;
     var isSubscriptionFilterInjected = document.getElementById('subscriptions-filter-section') !== null;

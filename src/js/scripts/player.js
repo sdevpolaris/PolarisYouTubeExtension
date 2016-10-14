@@ -12,7 +12,9 @@
     // This custom event is used to pass YouTube's player configuration properties
 
     document.addEventListener('PolarisYTConfigsRequest', function(e) {
-      var response = window.ytplayer.config.args;
+      var response = {};
+      response.master = window.yt.config_;
+      response.player = window.ytplayer.config.args;
       var resp = new CustomEvent('PolarisYTConfigsResponse', {'detail': response});
     document.dispatchEvent(resp);
     });
@@ -32,7 +34,6 @@
 
   function interceptApplicationCreate(create) {
     return function () {
-
       // Passed in arguments[1] will be the config object that the native Application create
       // will use in order to create the player on YouTube
 
@@ -49,6 +50,21 @@
     };
   }
 
+  function interceptSetConfig(setConfig) {
+    return function () {
+      var configs = arguments[0];
+      if (typeof configs === 'object') {
+        if ('UNIVERSAL_HOVERCARDS' in configs) {
+          arguments[0].UNIVERSAL_HOVERCARDS = !polarisSettings.YT_HOVERCARDS_OFF;
+        }
+        if ('SHARE_ON_VIDEO_END' in configs) {
+          arguments[0].SHARE_ON_VIDEO_END = !polarisSettings.YT_PLAYER_SHARE_ON_END_OFF;
+        }
+      }
+      setConfig.apply(this, arguments);
+    };
+  }
+
   function waitForPlayerApplicationCreate() {
     document.addEventListener('load', function(event) {
       if (event && window.yt && window.yt.player && window.yt.player.Application && window.yt.player.Application.create) {
@@ -59,10 +75,17 @@
           value : interceptApplicationCreate(window.yt.player.Application.create)
         });
       }
+
+      if (event && window.yt && window.yt.setConfig) {
+        Object.defineProperty(window.yt, 'setConfig', {
+          value : interceptSetConfig(window.yt.setConfig)
+        });
+      }
     }, true);
   }
 
   initYTConfigListeners();
   initPolarisSettingListeners();
   dispatchPolarisSettingRequest();
+
 })();

@@ -227,13 +227,13 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
     for (var i in qualityList) {
       var quality = qualityList[i];
       var primary = key_base + quality;
-      var url = ytconfigs[primary];
+      var url = playerConfigs[primary];
       if (url) {
         return url;
       }
 
       var secondary = key_base + quality + webp;
-      url = ytconfigs[secondary];
+      url = playerConfigs[secondary];
       if (url) {
         return url;
       }

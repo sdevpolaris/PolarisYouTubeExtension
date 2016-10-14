@@ -21,7 +21,9 @@
   // These settings will have to be present at document_start rather than document_end like the rest
 
   var playerSettings = {
-    YT_PLAYER_ANNOTATIONS_OFF : true
+    YT_PLAYER_ANNOTATIONS_OFF  : true,
+    YT_HOVERCARDS_OFF          : true,
+    YT_PLAYER_SHARE_ON_END_OFF : true
   };
 
   document.addEventListener('PolarisSettingsRequest', function(e) {
