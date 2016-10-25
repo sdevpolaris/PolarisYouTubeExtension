@@ -2,6 +2,9 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
 
   'use strict';
 
+  // Initially the search options should be showing
+  var isSearchVisible = true;
+
   function buildItem(tile) {
 
     // Url of the video
@@ -370,12 +373,7 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
 
     sidebarModules.appendChild(searchResultSection);
 
-    // Initially the search options should be showing
-
-    var isSearchVisible = true;
-
-    searchDisplayToggle.onclick = function() {
-      isSearchVisible = !isSearchVisible;
+    var searchToggleFunction = function() {
       if (isSearchVisible) {
         customSearchesWrapper.classList.remove('watch-hide');
         searchDisplayToggleText.innerHTML = 'Hide Search Options';
@@ -383,6 +381,13 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
         customSearchesWrapper.classList.add('watch-hide');
         searchDisplayToggleText.innerHTML = 'Show Search Options';
       }
+    };
+
+    searchToggleFunction();
+
+    searchDisplayToggle.onclick = function() {
+      isSearchVisible = !isSearchVisible;
+      searchToggleFunction();
     };
   }
 
