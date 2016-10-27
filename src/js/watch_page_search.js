@@ -123,19 +123,10 @@ polarisYT['YT_WATCH_PAGE_SEARCH'] = (function(){
     displaySearchResults(resultTiles, query, cbObject);
   }
 
-  // This function returns the current username or the channel id of the video playing by parsing
-  // the href attribute of user's logo
+  // This function returns the current channel id, which is just the ucid property of the config object
 
   function getCurrentChannelId() {
-    var header = document.getElementById('watch7-user-header');
-    var userHref = header.getElementsByTagName('a')[0];
-
-    var tokens = userHref.href.split('/');
-
-    var id = tokens.pop();
-    var userType = tokens.pop();
-
-    return userType + '/' + id;
+    return 'channel/' + playerConfigs.ucid;
   }
 
   function queryVideos(xhr, field, channelOnly, cbObject) {
