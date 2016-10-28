@@ -107,9 +107,17 @@
 
     var daysDiff = currentDateMoment.diff(publishedDateMoment, 'days');
 
+    var updatedDateText = publishedDateText.innerHTML;
+
+    if (daysDiff !== 1) {
+      updatedDateText += ' &#x002022 (' + daysDiff + ' days ago)';
+    } else {
+      updatedDateText += ' &#x002022 (1 day ago)';
+    }
+
     // Modify the text to include the days difference, with a dot separator mimicking the style on YouTube
 
-    publishedDateText.innerHTML = publishedDateText.innerHTML + ' &#x002022 (' + daysDiff + ' days ago)';
+    publishedDateText.innerHTML = updatedDateText;
   }
 
   function insertHideCommentSection() {
