@@ -26,7 +26,8 @@ var uiSettings = (function(){
       YT_WATCH_PAGE_SEARCH               : watchPageSearch,
       YT_WATCH_PAGE_SHOW_LIKE_PERCENTAGE : showLikes,
       YT_WATCH_PAGE_HIDE_RECOMMEND       : hideRecommendations,
-      YT_WATCH_PAGE_PUBLISH_TIME_DAYS    : true
+      YT_WATCH_PAGE_PUBLISH_TIME_DAYS    : true,
+      YT_WATCH_PAGE_SHOW_HIDE_COMMENTS   : true
     }
   };
 })();

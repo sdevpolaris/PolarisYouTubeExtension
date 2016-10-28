@@ -2,6 +2,8 @@
 
   'use strict';
 
+  var commentsShown = false;
+
   // Function to add like/dislike percentages to the counters 
   // (There are two distinct pair of like/dislike counts: unclicked and clicked)
 
@@ -110,10 +112,70 @@
     publishedDateText.innerHTML = publishedDateText.innerHTML + ' &#x002022 (' + daysDiff + ' days ago)';
   }
 
+  function insertHideCommentSection() {
+    var hideCommentsToggle = document.createElement('button');
+    hideCommentsToggle.id = 'watch-hide-comments-toggle';
+    hideCommentsToggle.className = 'yt-uix-button yt-uix-button-size-default yt-uix-button-expander';
+
+    var hideCommentsToggleText = document.createElement('span');
+    hideCommentsToggleText.className = 'yt-uix-button-content';
+    hideCommentsToggleText.innerHTML = 'Hide Comment Section';
+
+    hideCommentsToggle.appendChild(hideCommentsToggleText);
+
+    var commentsSection = document.getElementById('watch-discussion');
+
+    var observer = new MutationObserver(function(mutations) {
+      for (var index in mutations) {
+        var mutation = mutations[index];
+        if (mutation.target.id === 'watch-discussion') {
+          var commentsList = document.getElementById('comment-section-renderer');
+
+          var hideCommentsToggle = document.createElement('button');
+          hideCommentsToggle.id = 'watch-hide-comments-toggle';
+          hideCommentsToggle.className = 'yt-uix-button yt-uix-button-size-default yt-uix-button-expander';
+
+          var hideCommentsToggleText = document.createElement('span');
+          hideCommentsToggleText.className = 'yt-uix-button-content';
+          hideCommentsToggleText.innerHTML = 'Hide Comment Section';
+
+          hideCommentsToggle.appendChild(hideCommentsToggleText);
+
+          commentsSection.insertBefore(hideCommentsToggle, commentsSection.firstChild);
+
+          var commentToggleFunction = function() {
+            if (commentsShown) {
+              commentsList.classList.remove('watch-hide');
+              hideCommentsToggleText.innerHTML = 'Hide Comment Section';
+            } else {
+              commentsList.classList.add('watch-hide');
+              hideCommentsToggleText.innerHTML = 'Show Comment Section';
+            }
+          };
+
+          commentToggleFunction();
+
+          hideCommentsToggle.onclick = function() {
+            commentsShown = !commentsShown;
+            commentToggleFunction();
+          };
+
+          // Disconnect the observer immediately since the Show More button disappears after one click
+
+          observer.disconnect();
+        }
+      }
+    });
+
+    var config = { attributes: false, subtree: true, childList: true };
+    observer.observe(commentsSection, config);
+  }
+
   // Register functions with global keys
 
   polarisYT['YT_WATCH_PAGE_SHOW_LIKE_PERCENTAGE'] = { action : showLikeDislikePercentage };
   polarisYT['YT_WATCH_PAGE_HIDE_RECOMMEND'] = { action : hideRecommendedVideos };
   polarisYT['YT_WATCH_PAGE_PUBLISH_TIME_DAYS'] = { action : showPublishedDateInDays };
+  polarisYT['YT_WATCH_PAGE_SHOW_HIDE_COMMENTS'] = { action : insertHideCommentSection };
 
 })();

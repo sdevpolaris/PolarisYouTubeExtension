@@ -11,7 +11,7 @@
 }
 
 #watch-custom-search-toggle {
-  margin-top: 5px;
+  margin-top: 0px;
   margin-bottom: 0px;
   border-top: none;
 }
@@ -186,4 +186,12 @@ svg.watch-custom-control-fullscreen text {
 #customLoadingIcon {
   font-size: 70px;
   color: purple;
+}
+
+/* Comment section toggles */
+#watch-hide-comments-toggle {
+  margin-top: -15px;
+  border-top: none;
+  border-bottom: 1px solid #e2e2e2;
+  margin-bottom: 10px;
 }
