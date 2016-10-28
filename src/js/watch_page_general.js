@@ -85,9 +85,35 @@
     observer.observe(relatedList, config);
   }
 
+  // This function will modify the uploaded date text to include the number of days since then
+
+  function showPublishedDateInDays() {
+    var uploaderInfo = document.getElementById('watch-uploader-info');
+    var publishedDateText = uploaderInfo.getElementsByClassName('watch-time-text')[0];
+
+    // There are two wordings with the text, need to replace both phrases to extract the date
+
+    var publishedDate = publishedDateText.innerHTML.replace('Published on ', '').replace('Uploaded on ', '');
+
+    // Using moment.js to parse the published date
+
+    var publishedDateMoment = moment(publishedDate, 'MMM D, YYYY');
+
+    // Current time
+
+    var currentDateMoment = moment();
+
+    var daysDiff = currentDateMoment.diff(publishedDateMoment, 'days');
+
+    // Modify the text to include the days difference, with a dot separator mimicking the style on YouTube
+
+    publishedDateText.innerHTML = publishedDateText.innerHTML + ' &#x002022 (' + daysDiff + ' days ago)';
+  }
+
   // Register functions with global keys
 
   polarisYT['YT_WATCH_PAGE_SHOW_LIKE_PERCENTAGE'] = { action : showLikeDislikePercentage };
   polarisYT['YT_WATCH_PAGE_HIDE_RECOMMEND'] = { action : hideRecommendedVideos };
+  polarisYT['YT_WATCH_PAGE_PUBLISH_TIME_DAYS'] = { action : showPublishedDateInDays };
 
 })();

@@ -27,6 +27,11 @@
     },
     {
       "matches": ["*://www.youtube.com/*"],
+      "js": ["src/js/vendor/moment.min.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://www.youtube.com/*"],
       "js": ["src/js/utils/settings.js"],
       "run_at": "document_end"
     },
