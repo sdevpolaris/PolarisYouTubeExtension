@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/vendor/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/options.css">
-    <script type="text/javascript" src="../js/jquery-1.11.1.js"></script>
-    <script type="text/javascript" src="../js/bootstrap.js"></script>
-    <title>Options for Youtube Tools</title>
+    <script type="text/javascript" src="../js/vendor/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="../js/vendor/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/options.js"></script>
+    <title>Options for Polaris: YouTube Chrome Extension</title>
   </head>
   <body>
     <div class="navbar-wrap">
       <div class="container">
         <div class="navbar navbar-inverse navbar-static">
           <div class="container">
-            <div class="navbar-brand">Youtube Enhancement Suite
+            <div class="navbar-brand">Polaris
             </div>
             <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
               <span class="icon-bar"></span>
@@ -34,8 +35,6 @@
           <div class="panel-body">
             <div class="setting-wrapper">
               <div id="rm-playlist-text" class="setting-text">Remove channel wide playlist (Deprecated)
-                <span id="rm-playlist-icon" class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Enabling this option will remove the playlist attached with any videos opened from a user's channel">
-                </span>
               </div>
               <div id="rm-playlist-options" class="setting-options">
                 <input type="checkbox" id="rm-playlist">
@@ -43,8 +42,6 @@
             </div>
             <div class="setting-wrapper">
               <div id="rm-recmdchannels-text" class="setting-text">Remove recommended channels (In Development)
-                <span id="rm-recmdchannels-icon" class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Enabling this option will remove the playlist attached with any videos opened from a user's channel">
-                </span>
               </div>
               <div id="rm-recmdchannels-options" class="setting-options">
                 <input type="checkbox" id="rm-recmdchannels">
@@ -63,8 +60,6 @@
           <div class="panel-body">
             <div class="setting-wrapper">
               <div id="default-quality-text" class="setting-text">Default player quality:
-                <span id="default-quality-icon" class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="If the current video does not support the current quality chosen, it will fallback to the highest quality that the video supports.">
-                </span>
               </div>
               <div id="default-quality-list" class="btn-group setting-options" role="group" aria-label="...">
                 <button id="auto" type="button" class="btn btn-default">Auto</button>
@@ -88,8 +83,6 @@
             </div>
             <div class="setting-wrapper">
               <div id="rm-annotations-text" class="setting-text">Auto annotations off
-                <span id="rm-annotations-icon" class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Enabling this option will remove all the annoying annotations from the current playing Youtube video">
-                </span>
               </div>
               <div id="rm-annotation-options" class="setting-options">
                 <input type="checkbox" id="rm-annotations">
@@ -107,15 +100,13 @@
               </div>
               <div class="setting-options">
                 <div id="video-size-list" class="btn-group" role="group" aria-label="...">
-                  <button id="player-small" type="button" class="btn btn-default">Small View</button>
-                  <button id="player-large" type="button" class="btn btn-default">Large View</button>
+                  <button id="player-small" type="button" class="btn btn-default">Default View</button>
+                  <button id="player-large" type="button" class="btn btn-default">Theater Mode</button>
                 </div>
               </div>
             </div>
             <div class="setting-wrapper">
               <div id="rm-annotations-text" class="setting-text">Smart Buffering (In Development)
-                <span id="smart-buffering-icon" class="glyphicon glyphicon-question-sign" data-toggle="tooltip" title="Based on the current selected player quality and loading speed, pause video to allow a reasonable buffered time frame to watch">
-                </span>
               </div>
               <div id="rm-annotation-options" class="setting-options">
                 <input type="checkbox" id="rm-annotations">
