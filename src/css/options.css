@@ -1,60 +1,67 @@
-.navbar-wrap > .container {
-  padding-top: 50px;
-}
-
-.navbar {
-  width: 75%;
-}
-
-.panel {
-  width: 75%;
+.purple-custom-panel {
+  width: 70%;
   margin: 0 auto;
   margin-top: 50px;
-  opacity: 0;
-  display: none;
+  border-color: #4B0082;
 }
 
-.visible {
-  display: block;
+.purple-custom-panel > .custom-panel-header {
+  background-image: none;
+  background-color: #4B0082;
+  color: white;
+  border-color: #4B0082;
 }
 
-.tooltip-inner {
-  text-align: left;
-}
-
-.save-notify {
-  padding-right: 20px;
-  display: none;
-}
-
-.save-settings {
-  float: right;
-  clear: none;
-  padding-top: 20px;
-}
-
-.setting-wrapper {
-  margin-bottom: 25px;
-  display: table;
-  width: 100%;
-}
-
-.setting-wrapper > div:first-child + div {
+.custom-nav-header {
+  width: 110px;
   text-align: center;
 }
 
-.setting-text {
-  width: 40%;
+/* nav-pills customizations */
+
+.nav > li > a {
+  color: #4B0082;
+  background-color: #E6E6FA;
+}
+
+.nav > li > a:hover {
+  color: white;
+  background-color: #9370DB;
+}
+
+.nav > li.active > a, .nav > li.active > a:hover, .nav > li.active > a:focus {
+  background-color: #4B0082;
+}
+
+/* Tab content */
+
+.tabpanel-wrap {
+  width: 95%;
+  margin: 0 auto;
+}
+
+.alert {
+  margin-top: 10px;
+}
+
+/* Individual setting items */
+
+.setting-wrap {
+  display: table;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.setting-left {
+  width: 60%;
   display: table-cell;
   vertical-align: middle;
   font-size: 15px;
 }
 
-.setting-options {
+.setting-right {
   display: table-cell;
   vertical-align: middle;
-}
-
-#default-volume {
-  width: 50px;
+  text-align: middle;
 }
