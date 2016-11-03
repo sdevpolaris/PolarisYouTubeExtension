@@ -1,33 +1,30 @@
+// settings object used by content scripts, loaded from saved settings from options
+
+var polarisSettings = {};
+
+// object that holds all action functions to their corresponding setting
+
 var polarisYT = {};
+
+// Two config objects retrieved from the injected scripts running in YouTube's web page context
 
 var ytConfigs = {};
 var playerConfigs = {};
 
-var uiSettings = (function(){
+(function() {
 
   'use strict';
 
-  // These settings will later be implemented into toggles in extension's options page
-  // For now, simple default values
+  // Load saved settings
 
-  var subFilter = true;
-  var watchPageSearch = true;
-  var showLikes = true;
-  var hideRecommendations = true;
+  var settings = {};
 
-  return {
-    general : {
-      YT_SUBFILTER : subFilter
-    },
-    player : {
-      YT_PLAYER_CUSTOM_CONTROLS : true
-    },
-    watch : {
-      YT_WATCH_PAGE_SEARCH               : watchPageSearch,
-      YT_WATCH_PAGE_SHOW_LIKE_PERCENTAGE : showLikes,
-      YT_WATCH_PAGE_HIDE_RECOMMEND       : hideRecommendations,
-      YT_WATCH_PAGE_PUBLISH_TIME_DAYS    : true,
-      YT_WATCH_PAGE_SHOW_HIDE_COMMENTS   : true
-    }
-  };
+  function loadSavedSetting() {
+    chrome.storage.sync.get('polaris', function(items) {
+      polarisSettings = items.polaris;
+    });
+  }
+
+  loadSavedSetting();
+
 })();

@@ -20,11 +20,15 @@
 
   'use strict';
 
-  function performAllActions(category, actions) {
+  function performAllActions(category, actions, context) {
     for (var key in category) {
-      var enabled = category[key];
-      if (enabled) {
-        actions[key].action();
+
+      // Only perform action if it is in the right context, and it is not an injected setting
+      if (key.indexOf('YT_' + context) !== -1 && !category[key].inject) {
+        var enabled = category[key].enable;
+        if (enabled) {
+          actions[key].action();
+        }
       }
     }
   }
@@ -36,13 +40,13 @@
 
     if (destURL.indexOf('youtube.com') !== -1) {
 
-      performAllActions(uiSettings.general, polarisYT);
+      performAllActions(polarisSettings, polarisYT, 'GENERAL_');
 
       // Watch page with all of its feature toggles
 
       if (destURL.indexOf('watch') !== -1) {
-        performAllActions(uiSettings.watch, polarisYT);
-        performAllActions(uiSettings.player, polarisYT);
+        performAllActions(polarisSettings, polarisYT, 'WATCH_');
+        performAllActions(polarisSettings, polarisYT, 'PLAYER_');
       }
     }    
   }

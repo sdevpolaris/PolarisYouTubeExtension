@@ -27,12 +27,12 @@
     },
     {
       "matches": ["*://www.youtube.com/*"],
-      "js": ["src/js/vendor/moment.min.js"],
-      "run_at": "document_end"
+      "js": ["src/js/utils/settings.js"],
+      "run_at": "document_start"
     },
     {
       "matches": ["*://www.youtube.com/*"],
-      "js": ["src/js/utils/settings.js"],
+      "js": ["src/js/vendor/moment.min.js"],
       "run_at": "document_end"
     },
     {

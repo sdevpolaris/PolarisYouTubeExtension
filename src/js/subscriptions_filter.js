@@ -1,4 +1,4 @@
-polarisYT['YT_SUBFILTER'] = (function() {
+polarisYT['YT_GENERAL_SUBFILTER'] = (function() {
 
   'use strict';
 

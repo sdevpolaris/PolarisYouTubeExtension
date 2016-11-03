@@ -16,7 +16,7 @@
 
   function initTogglesWithSettings() {
     for (var id in settings) {
-      var enabled = settings[id];
+      var enabled = settings[id].enable;
       var checkbox = $('#' + id);
       checkbox[0].checked = enabled;
     }
@@ -66,7 +66,7 @@
   function saveChanges(callback) {
     for (var id in settings) {
       var checkbox = $('#' + id);
-      settings[id] = checkbox[0].checked;
+      settings[id].enable = checkbox[0].checked;
     }
     chrome.storage.sync.set({
       polaris : settings
