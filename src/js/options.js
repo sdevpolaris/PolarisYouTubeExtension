@@ -2,40 +2,68 @@
 
   'use strict';
 
+  var dirty = false;
+  var saveBtn;
+  var reloadBtn;
+  var settings;
+
   function loadSavedSetting(callback) {
     chrome.storage.sync.get('polaris', function(items) {
-      callback(items.polaris);
+      settings = items.polaris;
+      callback();
     });
   }
 
-  function initializeTogglesWithSettings(settings) {
+  function initTogglesWithSettings() {
     for (var id in settings) {
       var enabled = settings[id];
-      if (enabled) {
-        var checkbox = $('#' + id);
-        checkbox.prop('checked', true);
-      }
+      var checkbox = $('#' + id);
+      checkbox[0].checked = enabled;
     }
   }
 
   function toggleChanged() {
-    console.log('set dirty');
+    dirty = true;
+    saveBtn.prop('disabled', '');
+    reloadBtn.prop('disabled', '');
   }
 
-  function initializeTogglesWithListeners(settings) {
+  function initTogglesWithListeners() {
     for (var id in settings) {
       var checkbox = $('#' + id);
       checkbox.change(toggleChanged);
     }
   }
 
-  function initializeFunctions(settings) {
-    initializeTogglesWithSettings(settings);
-    initializeTogglesWithListeners(settings);
-    // saveChanges(settings);
+  function disableSaveAndReload() {
+    saveBtn.prop('disabled', 'disabled');
+    reloadBtn.prop('disabled', 'disabled');
   }
 
-  function saveChanges(settings) {
+  function reloadCallback() {
+    initTogglesWithSettings();
+    disableSaveAndReload();
+  }
+
+  function initSaveAndReload() {
+    saveBtn = $('#save');
+    saveBtn.click(function() {
+      saveChanges(disableSaveAndReload);
+    });
+
+    reloadBtn = $('#reload');
+    reloadBtn.click(function() {
+      loadSavedSetting(reloadCallback);
+    });
+  }
+
+  function initFunctions() {
+    initTogglesWithSettings();
+    initTogglesWithListeners();
+    initSaveAndReload();
+  }
+
+  function saveChanges(callback) {
     for (var id in settings) {
       var checkbox = $('#' + id);
       settings[id] = checkbox[0].checked;
@@ -43,11 +71,10 @@
     chrome.storage.sync.set({
       polaris : settings
     }, function() {
-      console.log('Saved settings');
+      callback();
     });
   }
 
-  loadSavedSetting(initializeFunctions);
-
+  loadSavedSetting(initFunctions);
   
 })();

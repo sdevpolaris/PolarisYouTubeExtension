@@ -35,13 +35,13 @@
 
 /* Tab content */
 
-.tabpanel-wrap {
+.panel-body {
   width: 95%;
   margin: 0 auto;
 }
 
 .alert {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 /* Individual setting items */
@@ -64,4 +64,14 @@
   display: table-cell;
   vertical-align: middle;
   text-align: center;
+}
+
+/* Save and reload buttons */
+
+.btn-wrap {
+  text-align: right;
+}
+
+.options-btn {
+  float: left;
 }
