@@ -29,16 +29,23 @@
               </div>
 
               <div class="setting-wrap">
+                <div class="setting-left">Enable Subscription Filter on the left side panel</div>
+                <div class="setting-right">
+                  <input id="YT_SUBFILTER" type="checkbox"></input>
+                </div>
+              </div>
+
+              <div class="setting-wrap">
                 <div class="setting-left">Disable channel hovercards</div>
                 <div class="setting-right">
-                  <input type="checkbox"></input>
+                  <input id="YT_HOVERCARDS_OFF" type="checkbox"></input>
                 </div>
               </div>
 
               <div class="setting-wrap">
                 <div class="setting-left">Disable share panel upon video ending</div>
                 <div class="setting-right">
-                  <input type="checkbox" checked></input>
+                  <input id="YT_PLAYER_SHARE_ON_END_OFF" type="checkbox"></input>
                 </div>
               </div>
             </div>
@@ -51,28 +58,63 @@
               </div>
 
               <div class="setting-wrap">
+                <div class="setting-left">Enable custom in-place searches</div>
+                <div class="setting-right">
+                  <input id="YT_WATCH_PAGE_SEARCH" type="checkbox"></input>
+                </div>
+              </div>
+
+              <div class="setting-wrap">
                 <div class="setting-left">Show Like/Dislike percentages</div>
                 <div class="setting-right">
-                  <input type="checkbox"></input>
+                  <input id="YT_WATCH_PAGE_SHOW_LIKE_PERCENTAGE" type="checkbox"></input>
                 </div>
               </div>
 
               <div class="setting-wrap">
                 <div class="setting-left">Show number of days since video was uploaded</div>
                 <div class="setting-right">
-                  <input type="checkbox"></input>
+                  <input id="YT_WATCH_PAGE_PUBLISH_TIME_DAYS" type="checkbox"></input>
                 </div>
               </div>
 
               <div class="setting-wrap">
                 <div class="setting-left">Enable Show/Hide comment section toggle</div>
                 <div class="setting-right">
-                  <input type="checkbox" checked></input>
+                  <input id="YT_WATCH_PAGE_SHOW_HIDE_COMMENTS" type="checkbox"></input>
+                </div>
+              </div>
+
+              <div class="setting-wrap">
+                <div class="setting-left">Hide recommended videos in related videos</div>
+                <div class="setting-right">
+                  <input id="YT_WATCH_PAGE_HIDE_RECOMMEND" type="checkbox"></input>
                 </div>
               </div>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane fade" id="player">misc settings</div>
+          <div role="tabpanel" class="tab-pane fade" id="player">
+            <div class="tabpanel-wrap">
+              <div class="alert alert-info" role="alert">
+                Player settings will affect the existing HTML5 player on YouTube.
+                <a href="https://github.com/sdevpolaris/PolarisYouTubeExtension">Visit here to see all the features</a>
+              </div>
+
+              <div class="setting-wrap">
+                <div class="setting-left">Enable custom player controls</div>
+                <div class="setting-right">
+                  <input id="YT_PLAYER_CUSTOM_CONTROLS" type="checkbox"></input>
+                </div>
+              </div>
+
+              <div class="setting-wrap">
+                <div class="setting-left">Disable annotations</div>
+                <div class="setting-right">
+                  <input id="YT_PLAYER_ANNOTATIONS_OFF" type="checkbox"></input>
+                </div>
+              </div>
+            </div>
+          </div>
           <div role="tabpanel" class="tab-pane fade" id="export">export settings</div>
         </div>
       </div>
