@@ -3,8 +3,6 @@
   "version": "1.0",
   "description": "A Google Chrome Extension that enhances some of YouTube's UI elements",
   "permissions": [
-    "activeTab",
-    "tabs",
     "storage",
     "*://www.youtube.com/*",
     "https://i.ytimg.com/*"
@@ -22,12 +20,7 @@
   "content_scripts": [
     {
       "matches": ["*://www.youtube.com/*"],
-      "js": ["src/js/youtube.js"],
-      "run_at": "document_start"
-    },
-    {
-      "matches": ["*://www.youtube.com/*"],
-      "js": ["src/js/utils/settings.js"],
+      "js": ["src/js/inject.js", "src/js/utils/settings.js"],
       "run_at": "document_start"
     },
     {

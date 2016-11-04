@@ -15,13 +15,25 @@ var playerConfigs = {};
 
   'use strict';
 
-  // Load saved settings
+  // Return an object with settings that only concern with injected features
 
-  var settings = {};
+  function retrieveInjectedSettings() {
+    var injectedSettings = {};
+    for (var key in polarisSettings) {
+      var setting = polarisSettings[key];
+      if (setting.inject) {
+        injectedSettings[key] = setting.enable;
+      }
+    }
+    return injectedSettings;
+  }
+
+  // Load saved settings
 
   function loadSavedSetting() {
     chrome.storage.sync.get('polaris', function(items) {
       polarisSettings = items.polaris;
+      injectScripts(retrieveInjectedSettings());
     });
   }
 
