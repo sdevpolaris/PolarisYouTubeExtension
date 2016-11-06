@@ -24,9 +24,25 @@
     });
   }
 
+  function sendSettingUpdateToAllTabs() {
+    chrome.tabs.query({}, function(tabs) {
+      for (var tab in tabs) {
+        chrome.tabs.sendMessage(tabs[tab].id, { settingUpdate : true }, function(response) {
+
+        });
+      }
+    });
+  }
+
   chrome.runtime.onInstalled.addListener(function(details) {
     if (details.reason === 'install') {
       setInitialSettings();
+    }
+  });
+
+  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.settingsUpdate) {
+      sendSettingUpdateToAllTabs();
     }
   });
 

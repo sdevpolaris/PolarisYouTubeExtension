@@ -35,9 +35,16 @@
     }
   }
 
+  function sendSettingUpdateMessage() {
+    chrome.runtime.sendMessage({ settingsUpdate : true }, function(response) {
+
+    });
+  }
+
   function disableSaveAndReload() {
     saveBtn.prop('disabled', 'disabled');
     reloadBtn.prop('disabled', 'disabled');
+    sendSettingUpdateMessage();
   }
 
   function reloadCallback() {

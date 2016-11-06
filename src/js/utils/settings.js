@@ -30,13 +30,28 @@ var playerConfigs = {};
 
   // Load saved settings
 
-  function loadSavedSetting() {
+  function loadSavedSetting(callback, inject) {
     chrome.storage.sync.get('polaris', function(items) {
-      polarisSettings = items.polaris;
-      injectScripts(retrieveInjectedSettings());
+      callback(items.polaris, inject);
     });
   }
 
-  loadSavedSetting();
+  function loadSettingsCallback(settings, inject) {
+    polarisSettings = settings;
+    if (inject) {
+      injectScripts(retrieveInjectedSettings());
+    } else {
+      var settingUpdate = new CustomEvent('PolarisSettingsUpdate', {'detail' : polarisSettings});
+      document.dispatchEvent(settingUpdate);
+    }
+  }
+
+  loadSavedSetting(loadSettingsCallback, true);
+
+  chrome.runtime.onMessage.addListener(function(request, sender, response) {
+    if (request.settingUpdate) {
+      loadSavedSetting(loadSettingsCallback, false);
+    }
+  });
 
 })();

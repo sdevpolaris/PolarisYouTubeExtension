@@ -25,6 +25,16 @@
       polarisSettings = e.detail;
       waitForPlayerApplicationCreate();
     });
+
+    document.addEventListener('PolarisSettingsUpdate', function(e) {
+      polarisSettings = e.detail;
+
+      // Once we receive the updated settings object, disable spf for the current YouTube page so that,
+      // if the user navigates to any other YouTube pages, it will force a complete reload of YouTube site
+      // so that the new settings will take effect
+
+      disableSPF();
+    });
   }
 
   function disableSPF() {
