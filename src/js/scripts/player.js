@@ -27,6 +27,18 @@
     });
   }
 
+  function disableSPF() {
+    window.spf.dispose();
+  }
+
+  function initDocumentListeners() {
+    document.addEventListener('DOMContentLoaded', function() {
+      if (polarisSettings.YT_GENERAL_DISABLE_SPF) {
+        disableSPF();
+      }
+    });
+  }
+
   function dispatchPolarisSettingRequest() {
     var settingRequest = new CustomEvent('PolarisSettingsRequest', {'detail' : 'injected'});
     document.dispatchEvent(settingRequest);
@@ -85,6 +97,7 @@
 
   initYTConfigListeners();
   initPolarisSettingListeners();
+  initDocumentListeners();
   dispatchPolarisSettingRequest();
 
 })();
