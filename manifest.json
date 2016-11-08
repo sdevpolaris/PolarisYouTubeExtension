@@ -30,7 +30,7 @@
     },
     {
       "matches": ["*://www.youtube.com/*"],
-      "js": ["src/js/subscriptions_filter.js"],
+      "js": ["src/js/general_features.js", "src/js/subscriptions_filter.js"],
       "css": ["src/css/subscriptions_filter.css"],
       "run_at": "document_end"
     },

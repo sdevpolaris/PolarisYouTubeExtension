@@ -8,6 +8,7 @@
       YT_GENERAL_HOVERCARDS_OFF          : { enable : true , inject: true  },
       YT_GENERAL_SHARE_ON_END_OFF        : { enable : true , inject: true  },
       YT_GENERAL_DISABLE_SPF             : { enable : false, inject: true  },
+      YT_GENERAL_REDIRECT_YOUTUBE_SUB    : { enable : true , inject: false },
       YT_WATCH_PAGE_SEARCH               : { enable : true , inject: false },
       YT_WATCH_PAGE_SHOW_LIKE_PERCENTAGE : { enable : true , inject: false },
       YT_WATCH_PAGE_HIDE_RECOMMEND       : { enable : true , inject: false },
