@@ -13,8 +13,12 @@
 
     document.addEventListener('PolarisYTConfigsRequest', function(e) {
       var response = {};
-      response.master = window.yt.config_;
-      response.player = window.ytplayer.config.args;
+      if (window.yt && window.yt.config_) {
+        response.master = window.yt.config_;
+      }
+      if (window.ytplayer && window.ytplayer.config && window.ytplayer.config.args) {
+        response.player = window.ytplayer.config.args;
+      }
       var resp = new CustomEvent('PolarisYTConfigsResponse', {'detail': response});
     document.dispatchEvent(resp);
     });
