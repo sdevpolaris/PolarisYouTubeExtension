@@ -49,8 +49,9 @@
 .setting-wrap {
   display: table;
   width: 100%;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  min-height: 35px;
 }
 
 .setting-left {
@@ -69,6 +70,7 @@
 /* Save and reload buttons */
 
 .btn-wrap {
+  margin-top: 20px;
   text-align: right;
 }
 

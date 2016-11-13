@@ -179,11 +179,33 @@
     observer.observe(commentsSection, config);
   }
 
+  function switchWatchMode(custom) {
+
+    // Don't do anything if it is auto, YouTube will use the default view mode based on session (or cookie?)
+
+    if (custom === 'auto') {
+      return;
+    }
+
+    var page = document.getElementById('page');
+
+    if (custom === 'theater') {
+      page.classList.add('watch-wide');
+      page.classList.add('watch-stage-mode');
+      page.classList.remove('watch-non-stage-mode');
+    } else {
+      page.classList.remove('watch-wide');
+      page.classList.remove('watch-stage-mode');
+      page.classList.add('watch-non-stage-mode');
+    }
+  }
+
   // Register functions with global keys
 
   polarisYT['YT_WATCH_PAGE_SHOW_LIKE_PERCENTAGE'] = { action : showLikeDislikePercentage };
   polarisYT['YT_WATCH_PAGE_HIDE_RECOMMEND'] = { action : hideRecommendedVideos };
   polarisYT['YT_WATCH_PAGE_PUBLISH_TIME_DAYS'] = { action : showPublishedDateInDays };
   polarisYT['YT_WATCH_PAGE_SHOW_HIDE_COMMENTS'] = { action : insertHideCommentSection };
+  polarisYT['YT_WATCH_PAGE_DEFAULT_WATCH_MODE'] = { action : switchWatchMode };
 
 })();

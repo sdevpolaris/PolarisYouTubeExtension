@@ -14,11 +14,31 @@
     });
   }
 
+  function initButtonGroupSetting(id) {
+    var buttons = $('button[id^=' + id + ']');
+    var customValue = settings[id].custom;
+    var activeBtn = $('#' + id + '_' + customValue);
+    activeBtn.addClass('active');
+
+    buttons.click(function() {
+      var currBtn = $(this);
+      if (!currBtn.hasClass('active')) {
+        $(this).addClass('active').siblings().removeClass('active');
+        toggleChanged();
+        settings[id].custom = currBtn.attr('value');
+      }
+    });
+  }
+
   function initTogglesWithSettings() {
     for (var id in settings) {
       var enabled = settings[id].enable;
-      var checkbox = $('#' + id);
-      checkbox[0].checked = enabled;
+      var setting = $('#' + id);
+      if (setting.attr('role') === 'group') {
+        initButtonGroupSetting(id);
+      } else {
+        setting[0].checked = enabled;
+      }
     }
   }
 
@@ -73,7 +93,9 @@
   function saveChanges(callback) {
     for (var id in settings) {
       var checkbox = $('#' + id);
-      settings[id].enable = checkbox[0].checked;
+      if (!checkbox.attr('role')) {
+        settings[id].enable = checkbox[0].checked;
+      }
     }
     chrome.storage.sync.set({
       polaris : settings

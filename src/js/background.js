@@ -14,6 +14,7 @@
       YT_WATCH_PAGE_HIDE_RECOMMEND       : { enable : true , inject: false },
       YT_WATCH_PAGE_PUBLISH_TIME_DAYS    : { enable : true , inject: false },
       YT_WATCH_PAGE_SHOW_HIDE_COMMENTS   : { enable : true , inject: false },
+      YT_WATCH_PAGE_DEFAULT_WATCH_MODE   : { enable : true , inject: false, custom : 'auto' },
       YT_PLAYER_CUSTOM_CONTROLS          : { enable : true , inject: false },
       YT_PLAYER_ANNOTATIONS_OFF          : { enable : true , inject: true  }
     };

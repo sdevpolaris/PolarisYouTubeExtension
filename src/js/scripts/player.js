@@ -47,7 +47,7 @@
 
   function initDocumentListeners() {
     document.addEventListener('DOMContentLoaded', function() {
-      if (polarisSettings.YT_GENERAL_DISABLE_SPF) {
+      if (polarisSettings.YT_GENERAL_DISABLE_SPF.enable) {
         disableSPF();
       }
     });
@@ -69,7 +69,7 @@
       if (arguments && arguments[1] && arguments[1].args) {
 
         // iv_load_policy is the config that controls annotations, '3' denotes off and '1' is on
-        arguments[1].args.iv_load_policy = polarisSettings.YT_PLAYER_ANNOTATIONS_OFF ? '3' : '1';
+        arguments[1].args.iv_load_policy = polarisSettings.YT_PLAYER_ANNOTATIONS_OFF.enable ? '3' : '1';
       }
       create.apply(this, arguments);
     };
@@ -80,10 +80,10 @@
       var configs = arguments[0];
       if (typeof configs === 'object') {
         if ('UNIVERSAL_HOVERCARDS' in configs) {
-          arguments[0].UNIVERSAL_HOVERCARDS = !polarisSettings.YT_GENERAL_HOVERCARDS_OFF;
+          arguments[0].UNIVERSAL_HOVERCARDS = !polarisSettings.YT_GENERAL_HOVERCARDS_OFF.enable;
         }
         if ('SHARE_ON_VIDEO_END' in configs) {
-          arguments[0].SHARE_ON_VIDEO_END = !polarisSettings.YT_GENERAL_SHARE_ON_END_OFF;
+          arguments[0].SHARE_ON_VIDEO_END = !polarisSettings.YT_GENERAL_SHARE_ON_END_OFF.enable;
         }
       }
       setConfig.apply(this, arguments);

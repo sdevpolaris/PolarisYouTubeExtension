@@ -26,8 +26,9 @@
       // Only perform action if it is in the right context, and it is not an injected setting
       if (key.indexOf('YT_' + context) !== -1 && !category[key].inject) {
         var enabled = category[key].enable;
+        var custom = category[key].custom;
         if (enabled) {
-          actions[key].action();
+          actions[key].action(custom ? custom : null);
         }
       }
     }
