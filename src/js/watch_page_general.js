@@ -200,6 +200,25 @@
     }
   }
 
+  function showVideoKeywords() {
+    var descriptionPanel = document.getElementById('watch-description');
+
+    var keywords;
+
+    if (playerConfigs.keywords) {
+      keywords = playerConfigs.keywords.split(',').join(', ');
+    } else {
+      keywords = 'No keywords';
+    }
+
+    var keywordsPanel = document.createElement('div');
+    keywordsPanel.className = 'yt-uix-button-panel';
+    keywordsPanel.id = 'watch-keywords';
+    keywordsPanel.innerHTML = '<h4>Keywords:</h4>' + keywords;
+
+    descriptionPanel.parentNode.insertBefore(keywordsPanel, descriptionPanel.nextSibling);
+  }
+
   // Register functions with global keys
 
   polarisYT['YT_WATCH_PAGE_SHOW_LIKE_PERCENTAGE'] = { action : showLikeDislikePercentage };
@@ -207,5 +226,6 @@
   polarisYT['YT_WATCH_PAGE_PUBLISH_TIME_DAYS'] = { action : showPublishedDateInDays };
   polarisYT['YT_WATCH_PAGE_SHOW_HIDE_COMMENTS'] = { action : insertHideCommentSection };
   polarisYT['YT_WATCH_PAGE_DEFAULT_WATCH_MODE'] = { action : switchWatchMode };
+  polarisYT['YT_WATCH_SHOW_KEYWORDS'] = { action: showVideoKeywords };
 
 })();
