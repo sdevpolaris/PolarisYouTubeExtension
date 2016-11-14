@@ -69,7 +69,10 @@
       if (arguments && arguments[1] && arguments[1].args) {
 
         // iv_load_policy is the config that controls annotations, '3' denotes off and '1' is on
+
         arguments[1].args.iv_load_policy = polarisSettings.YT_PLAYER_ANNOTATIONS_OFF.enable ? '3' : '1';
+
+        arguments[1].args.showinfo = polarisSettings.YT_PLAYER_SHOW_TOP_INFO.enable ? '1' : '0';
       }
       create.apply(this, arguments);
     };
