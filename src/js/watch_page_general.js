@@ -93,9 +93,12 @@
     var uploaderInfo = document.getElementById('watch-uploader-info');
     var publishedDateText = uploaderInfo.getElementsByClassName('watch-time-text')[0];
 
-    // There are two wordings with the text, need to replace both phrases to extract the date
+    // There are multiple wordings for the date display, need to replace all phrases to extract the date
 
-    var publishedDate = publishedDateText.innerHTML.replace('Published on ', '').replace('Uploaded on ', '');
+    var publishedDate = publishedDateText.innerHTML.replace('Published on ', '')
+                                                   .replace('Uploaded on ', '')
+                                                   .replace('Started streaming on ', '')
+                                                   .replace('Streamed live on ', '');
 
     // Using moment.js to parse the published date
 
