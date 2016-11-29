@@ -48,6 +48,9 @@
       if (destURL.indexOf('watch') !== -1) {
         performAllActions(polarisSettings, polarisYT, 'WATCH_');
         performAllActions(polarisSettings, polarisYT, 'PLAYER_');
+        polarisYT['YT_WATCH_CLEANUP'][0]('WATCH');
+      } else {
+        polarisYT['YT_WATCH_CLEANUP'][0]('ELSE');
       }
     }    
   }

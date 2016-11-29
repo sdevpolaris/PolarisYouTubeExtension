@@ -6,6 +6,8 @@ var polarisSettings = {};
 
 var polarisYT = {};
 
+polarisYT['YT_WATCH_CLEANUP'] = [];
+
 // Two config objects retrieved from the injected scripts running in YouTube's web page context
 
 var ytConfigs = {};

@@ -195,3 +195,25 @@ svg.watch-custom-control-fullscreen text {
   border-bottom: 1px solid #e2e2e2;
   margin-bottom: 10px;
 }
+
+/* Fade background */
+
+#masthead-positioner:before,
+#cinema-overlay:before {
+  content: '';
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  transition: background 1s;
+  z-index: 4;
+}
+
+#masthead-positioner.cinema-mode:before,
+#cinema-overlay.cinema-mode:before {
+  background: rgba(0, 0, 0, 0.9);
+  transition: background 1s;
+}

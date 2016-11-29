@@ -1,6 +1,8 @@
-polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
+(function(){
 
   'use strict';
+
+  var inCinema = false;
 
   function isFullscreen() {
     return document.webkitIsFullScreen;
@@ -318,6 +320,52 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
     }
   }
 
+  function toggleCinemaMode(overlay, header, isOn) {
+    if (isOn) {
+      header.classList.add('cinema-mode');
+      overlay.classList.add('cinema-mode');
+    } else {
+      header.classList.remove('cinema-mode');
+      overlay.classList.remove('cinema-mode');
+    }
+  }
+
+  function cinemaModeEvent() {
+    var cinemaOverlay = document.getElementById('cinema-overlay');
+    if (!cinemaOverlay) {
+      cinemaOverlay = document.createElement('div');
+      cinemaOverlay.id = 'cinema-overlay';
+      document.body.appendChild(cinemaOverlay);
+    }
+
+    var topHeader = document.getElementById('masthead-positioner');
+
+    if (inCinema) {
+      toggleCinemaMode(cinemaOverlay, topHeader, false);
+    } else {
+      toggleCinemaMode(cinemaOverlay, topHeader, true);
+    }
+
+    inCinema = !inCinema;
+  }
+
+  function cinemaModeCleanup(context) {
+    var cinemaOverlay = document.getElementById('cinema-overlay');
+    var topHeader = document.getElementById('masthead-positioner');
+
+    if (cinemaOverlay && topHeader) {
+      if (context !== 'WATCH') {
+        toggleCinemaMode(cinemaOverlay, topHeader, false);
+      } else {
+        if (inCinema) {
+          toggleCinemaMode(cinemaOverlay, topHeader, true);
+        } else {
+          toggleCinemaMode(cinemaOverlay, topHeader, false);
+        }
+      }
+    }
+  }
+
   function insertCustomPlayerControls() {
     var bottomRightControls = document.querySelectorAll('.ytp-chrome-bottom .ytp-right-controls')[0];
 
@@ -350,10 +398,12 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
     var screenshotControlObj = createCustomControlObject('&#xf030;', controlTemplate, '9', '24', '15', '36');
     var repeatControlObj = createCustomControlObject('&#xf01e;', controlTemplate, '11', '24', '17.5', '35');
     var thumbnailControlObj = createCustomControlObject('&#xf03e;', controlTemplate, '9', '24', '15', '36');
+    var cinemaControlObj = createCustomControlObject('&#xf185;', controlTemplate, '9', '24', '15', '36');
 
     var screenshotControl = screenshotControlObj.control;
     var repeatControl = repeatControlObj.control;
     var thumbnailControl = thumbnailControlObj.control;
+    var cinemaControl = cinemaControlObj.control;
 
     // Add our custom tooltips to the controls here
 
@@ -366,9 +416,13 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
     thumbnailControl.classList.add('yt-uix-tooltip');
     thumbnailControl.setAttribute('title', 'See Thumbnail');
 
+    cinemaControl.classList.add('yt-uix-tooltip');
+    cinemaControl.setAttribute('title', 'Cinema Mode (Fades page to black)');
+
     customControlsList.push(screenshotControlObj);
     customControlsList.push(repeatControlObj);
     customControlsList.push(thumbnailControlObj);
+    customControlsList.push(cinemaControlObj);
 
     // Insert all of the custom controls to the right hand list of controls
 
@@ -424,11 +478,12 @@ polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = (function(){
       xhr.send();
     }
 
+    cinemaControl.onclick = cinemaModeEvent;
+
     enableLoop(repeatControl, video);
   }
 
-  return {
-    action : insertCustomPlayerControls
-  };
+  polarisYT['YT_PLAYER_CUSTOM_CONTROLS'] = { action: insertCustomPlayerControls };
+  polarisYT['YT_WATCH_CLEANUP'].push(cinemaModeCleanup);
 
 })();
