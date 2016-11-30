@@ -124,16 +124,6 @@
   }
 
   function insertHideCommentSection() {
-    var hideCommentsToggle = document.createElement('button');
-    hideCommentsToggle.id = 'watch-hide-comments-toggle';
-    hideCommentsToggle.className = 'yt-uix-button yt-uix-button-size-default yt-uix-button-expander';
-
-    var hideCommentsToggleText = document.createElement('span');
-    hideCommentsToggleText.className = 'yt-uix-button-content';
-    hideCommentsToggleText.innerHTML = 'Hide Comment Section';
-
-    hideCommentsToggle.appendChild(hideCommentsToggleText);
-
     var commentsSection = document.getElementById('watch-discussion');
 
     var observer = new MutationObserver(function(mutations) {
