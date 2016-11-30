@@ -36,7 +36,7 @@
     },
     {
       "matches": ["*://www.youtube.com/*"],
-      "js": ["src/js/watch_page_search.js", "src/js/watch_page_general.js", "src/js/player_controls.js"],
+      "js": ["src/js/watch_page_search.js", "src/js/watch_page_general.js", "src/js/player_general.js", "src/js/player_controls.js"],
       "css": ["src/css/vendor/font-awesome.css", "src/css/watch.css"],
       "run_at": "document_end"
     },

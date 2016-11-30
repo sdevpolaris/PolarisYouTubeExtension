@@ -17,7 +17,8 @@
     YT_WATCH_SHOW_KEYWORDS             : { enable : true , inject: false },
     YT_PLAYER_CUSTOM_CONTROLS          : { enable : true , inject: false },
     YT_PLAYER_ANNOTATIONS_OFF          : { enable : true , inject: true  },
-    YT_PLAYER_SHOW_TOP_INFO            : { enable : false, inject: true  }
+    YT_PLAYER_SHOW_TOP_INFO            : { enable : false, inject: true  },
+    YT_PLAYER_HIDE_END_SCREEN          : { enable : true , inject: false }
   };
 
   function loadSavedSetting(callback) {
