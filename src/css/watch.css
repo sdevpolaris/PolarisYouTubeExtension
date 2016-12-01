@@ -1,3 +1,7 @@
+.watch-hide {
+  display: none;
+}
+
 /* Custom search styles */
 
 /* sidebar-content is an existing youtube element */
@@ -32,10 +36,6 @@
   border: 0;
   box-sizing: border-box;
   font: 16px Roboto, arial, sans-serif;
-}
-
-.watch-hide {
-  display: none;
 }
 
 .watch-custom-search-form {
@@ -216,4 +216,9 @@ svg.watch-custom-control-fullscreen text {
 #cinema-overlay.cinema-mode:before {
   background: rgba(0, 0, 0, 0.9);
   transition: background 1s;
+}
+
+/* Suggestion Overlays */
+.ytp-ce-element.ce-hide {
+  display: none;
 }
