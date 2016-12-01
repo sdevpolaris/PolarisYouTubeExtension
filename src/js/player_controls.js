@@ -330,14 +330,17 @@
     }
   }
 
-  function cinemaModeEvent() {
+  function createCinemaOverlay() {
     var cinemaOverlay = document.getElementById('cinema-overlay');
     if (!cinemaOverlay) {
       cinemaOverlay = document.createElement('div');
       cinemaOverlay.id = 'cinema-overlay';
       document.body.appendChild(cinemaOverlay);
     }
+  }
 
+  function cinemaModeEvent() {
+    var cinemaOverlay = document.getElementById('cinema-overlay');
     var topHeader = document.getElementById('masthead-positioner');
 
     if (inCinema) {
@@ -478,6 +481,7 @@
       xhr.send();
     }
 
+    createCinemaOverlay();
     cinemaControl.onclick = cinemaModeEvent;
 
     enableLoop(repeatControl, video);
