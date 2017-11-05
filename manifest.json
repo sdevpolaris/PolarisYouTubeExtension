@@ -1,49 +1,20 @@
 {
   "name": "Polaris: Youtube Extension",
   "version": "1.0",
-  "description": "A Google Chrome Extension that enhances some of YouTube's UI elements",
+  "description": "A Google Chrome/Firefox Extension that enhances YouTube desktop web interface",
   "permissions": [
     "storage",
-    "*://www.youtube.com/*",
+    "contextMenus",
+    "https://www.youtube.com/*",
     "https://i.ytimg.com/*"
   ],
   "background": {
-    "page": "src/html/background.html",
-    "persistent": true
+    "page": "src/html/background.html"
   },
   "options_page": "src/html/options.html",
   "browser_action": {
       "default_title": "Polaris: Youtube Assistant"
   },
   "manifest_version": 2,
-  "web_accessible_resources" : ["src/js/scripts/player.js", "src/fonts/*.*"],
-  "content_scripts": [
-    {
-      "matches": ["*://www.youtube.com/*"],
-      "js": ["src/js/inject.js", "src/js/utils/settings.js"],
-      "run_at": "document_start"
-    },
-    {
-      "matches": ["*://www.youtube.com/*"],
-      "js": ["src/js/vendor/moment.min.js"],
-      "run_at": "document_end"
-    },
-    {
-      "matches": ["*://www.youtube.com/*"],
-      "js": ["src/js/general_features.js", "src/js/subscriptions_filter.js"],
-      "css": ["src/css/subscriptions_filter.css"],
-      "run_at": "document_end"
-    },
-    {
-      "matches": ["*://www.youtube.com/*"],
-      "js": ["src/js/watch_page_search.js", "src/js/watch_page_general.js", "src/js/player_general.js", "src/js/player_controls.js"],
-      "css": ["src/css/vendor/font-awesome.css", "src/css/watch.css"],
-      "run_at": "document_end"
-    },
-    {
-      "matches": ["*://www.youtube.com/*"],
-      "js": ["src/js/navigation.js"],
-      "run_at": "document_end"
-    }
-  ]
+  "web_accessible_resources" : ["src/js/scripts/player.js", "src/fonts/*.*"]
 }
