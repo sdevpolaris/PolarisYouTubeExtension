@@ -1,0 +1,8 @@
+ytd-searchbox.ytd-masthead#sidebar-subscription-filter-search {
+  margin: 0 20px;
+  margin-bottom: 10px;
+}
+
+#sidebar-subscription-filter-search #container {
+  border-right: 1px solid var(--ytd-searchbox-legacy-border-color);
+}
